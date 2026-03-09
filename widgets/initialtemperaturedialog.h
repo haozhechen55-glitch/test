@@ -24,6 +24,12 @@ public:
     // 获取用户输入的温度值
     double getTemperature() const;
 
+    // 返回 reference_temperature 字符串值（供 MaterialEditor 使用）
+    QString getReferenceTemperature() const;
+
+    // 从 UI 控件同步内部成员变量（反序列化后调用）
+    void syncFromUI();
+
 private slots:
     void onOkClicked();
     void onCancelClicked();

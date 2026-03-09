@@ -73,6 +73,16 @@ MaterialEditor::~MaterialEditor()
     delete ui;
 }
 
+void MaterialEditor::setTargetNodeName(const QString &name)
+{
+    m_currentEditingNode = name;
+    if (name.isEmpty()) {
+        setWindowTitleText("Material Editor");
+    } else {
+        setWindowTitleText("Edit Material: " + name);
+    }
+}
+
 // --------------------------------------------------------------------------
 //                              核心逻辑槽函数
 // --------------------------------------------------------------------------
@@ -259,7 +269,7 @@ void MaterialEditor::updateGlobalData()
 //                          YAML 生成与最终保存
 // --------------------------------------------------------------------------
 
-QString MaterialEditor::generateYamlString()
+QString MaterialEditor::getYamlSection(const QString &refTempOverride) const
 {
     QString yaml;
     QTextStream out(&yaml);
@@ -279,39 +289,53 @@ QString MaterialEditor::generateYamlString()
     }
 
     // 2. Solid Common
-    out << "    youngs_modulus:\n";
-    out << "        temperature: " << youngs_modulus_tem << "\n";
-    out << "        value: " << youngs_modulus_val << "\n";
-
-    out << "    fluid_density:\n";
-    out << "        temperature: " << fluid_density_tem << "\n";
-    out << "        value: " << fluid_density_val << "\n";
+    if (!youngs_modulus_tem.isEmpty() && !youngs_modulus_val.isEmpty()) {
+        out << "    youngs_modulus:\n";
+        out << "        temperature: " << youngs_modulus_tem << "\n";
+        out << "        value: " << youngs_modulus_val << "\n";
+    }
 
     out << "    poisson_ratio: " << poisson_ratio << "\n";
     out << "    solid_density: " << solid_density << "\n";
 
     // 3. Solid Exclusive (Elastic-Plastic only)
     if (ui->comboBox_ModelType->currentIndex() == ElasticPlastic) {
-        out << "    yield_stress:\n";
-        out << "        temperature: " << yield_stress_tem << "\n";
-        out << "        value: " << yield_stress_val << "\n";
-        out << "    plastic_modulus:\n";
-        out << "        temperature: " << plastic_modulus_tem << "\n";
-        out << "        value: " << plastic_modulus_val << "\n";
+        if (!yield_stress_tem.isEmpty() && !yield_stress_val.isEmpty()) {
+            out << "    yield_stress:\n";
+            out << "        temperature: " << yield_stress_tem << "\n";
+            out << "        value: " << yield_stress_val << "\n";
+        }
+        if (!plastic_modulus_tem.isEmpty() && !plastic_modulus_val.isEmpty()) {
+            out << "    plastic_modulus:\n";
+            out << "        temperature: " << plastic_modulus_tem << "\n";
+            out << "        value: " << plastic_modulus_val << "\n";
+        }
     }
 
     // 4. Liquid/Viscosity
-    out << "    dynamic_viscosity:\n";
-    out << "        temperature: " << dynamic_viscosity_tem << "\n";
-    out << "        value: " << dynamic_viscosity_val << "\n";
+    if (!fluid_density_tem.isEmpty() && !fluid_density_val.isEmpty()) {
+        out << "    fluid_density:\n";
+        out << "        temperature: " << fluid_density_tem << "\n";
+        out << "        value: " << fluid_density_val << "\n";
+    }
 
-    out << "    thermal_conductivity:\n";
-    out << "        temperature: " << thermal_conductivity_tem << "\n";
-    out << "        value: " << thermal_conductivity_val << "\n";
+    if (!dynamic_viscosity_tem.isEmpty() && !dynamic_viscosity_val.isEmpty()) {
+        out << "    dynamic_viscosity:\n";
+        out << "        temperature: " << dynamic_viscosity_tem << "\n";
+        out << "        value: " << dynamic_viscosity_val << "\n";
+    }
 
-    out << "    specific_heat:\n";
-    out << "        temperature: " << specific_heat_tem << "\n";
-    out << "        value: " << specific_heat_val << "\n";
+    if (!thermal_conductivity_tem.isEmpty() && !thermal_conductivity_val.isEmpty()) {
+        out << "    thermal_conductivity:\n";
+        out << "        temperature: " << thermal_conductivity_tem << "\n";
+        out << "        value: " << thermal_conductivity_val << "\n";
+    }
+
+    if (!specific_heat_tem.isEmpty() && !specific_heat_val.isEmpty()) {
+        out << "    specific_heat:\n";
+        out << "        temperature: " << specific_heat_tem << "\n";
+        out << "        value: " << specific_heat_val << "\n";
+    }
 
     // 5. Phase Change & Thermal
     out << "    liquidus_temperature: " << liquidus_temperature << "\n";
@@ -335,7 +359,8 @@ QString MaterialEditor::generateYamlString()
     out << "    convection_coefficient: " << convection_coefficient << "\n";
     out << "    radiative_emissivity: " << radiative_emissivity << "\n";
     out << "    absorption: " << absorption << "\n";
-    out << "    reference_temperature: " << reference_temperature << "\n";
+    QString refTemp = refTempOverride.isEmpty() ? reference_temperature : refTempOverride;
+    out << "    reference_temperature: " << refTemp << "\n";
     out << "    reference_pressure: " << reference_pressure << "\n";
 
     // 6. Limits & Gas (新增写入)
@@ -362,85 +387,8 @@ void MaterialEditor::on_pushButton_OK_clicked()
     updateThermologyData();
     updateGlobalData();
 
-    // 2. 准备文件写入
-    QString filePath = QDir::currentPath() + "/out.yml";
-    QFile file(filePath);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Yml file open failed"), this);
-        return;
-    }
-
-    QTextStream in(&file);
-    QString fileContent = in.readAll();
-    file.close();
-
-    // 3. 获取新生成的 material 块
-    QString newMaterialSection = generateYamlString();
-
-    // 4. 替换旧的 material 块
-    QStringList lines = fileContent.split('\n');
-
-    int bgMeshStartIndex = -1;
-    int bgMeshEndIndex = -1;
-
-    for (int i = 0; i < lines.size(); ++i) {
-        if (lines[i].trimmed() == "material:") {
-            bgMeshStartIndex = i;
-            break;
-        }
-    }
-
-    if (bgMeshStartIndex != -1) {
-        bgMeshEndIndex = bgMeshStartIndex;
-        for (int i = bgMeshStartIndex + 1; i < lines.size(); ++i) {
-            QString line = lines[i];
-            if (line.trimmed().isEmpty() || line.startsWith('#')) {
-                bgMeshEndIndex = i;
-                continue;
-            }
-            // 如果是缩进的，说明属于 material
-            if (line.startsWith(' ') || line.startsWith('\t')) {
-                bgMeshEndIndex = i;
-                continue;
-            } else {
-                // 遇到不缩进的行，说明 material 块结束了
-                bgMeshEndIndex = i - 1;
-                break;
-            }
-        }
-
-        // 删除旧块
-        for (int i = bgMeshEndIndex; i >= bgMeshStartIndex; --i) {
-            lines.removeAt(i);
-        }
-
-        // 插入新块
-        QStringList newLines = newMaterialSection.split('\n');
-        int insertIndex = bgMeshStartIndex;
-        for (const QString& newLine : newLines) {
-            lines.insert(insertIndex++, newLine);
-        }
-    } else {
-        // 没找到就追加
-        lines.append("");
-        QStringList newLines = newMaterialSection.split('\n');
-        lines.append(newLines);
-    }
-
-    // 5. 写回文件
-    QString newFileContent = lines.join('\n');
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Write to yml file failed"), this);
-        return;
-    }
-
-    QTextStream out(&file);
-    out << newFileContent;
-    file.close();
-
     Toast::instance().show(Toast::TINFO, "Material Saved Successfully", this);
 
-    emit sigAddMaterial(ui->comboBox_Material->currentText()); // 假设界面上有这个控件
+    emit sigAddMaterial(ui->comboBox_Material->currentText());
     accept();
 }

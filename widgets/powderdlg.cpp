@@ -91,107 +91,33 @@ void PowderDlg::on_toolButton_browse_clicked()
 
 void PowderDlg::on_pushButton_save_clicked()
 {
-    writeToYaml();
+    // 写入前处理预览配置 (config_temp.json)
+    writeJsonFile();
 
     // 发送信号
     QString finalName = m_currentEditingNode.isEmpty() ? "Powder" : m_currentEditingNode;
     emit sigAddPowder(finalName);
+
+    // 触发主界面刷新预览
     emit sigJsonWriteFinish();
 
-    // 提示保存成功并关闭
-    // Toast::instance().show(Toast::TINFO, "Powder settings saved.", this);
     this->close();
 }
 
-void PowderDlg::writeToYaml()
+QString PowderDlg::getYamlSection() const
 {
-    // 1. 获取 UI 数据
     QString type = ui->comboBox_type->currentText();
-    QString fileVal = ui->lineEdit_file->text(); // 此时应为 "input/xxx.vtk"
+    QString fileVal = ui->lineEdit_file->text();
     QString interval = ui->lineEdit_interval->text();
 
-    // 2. 构造 YAML 块
-    QString newSection = QString(
-                             "powder:\n"
-                             "    type: %1\n"
-                             "    file: %2\n"
-                             "    particle_inteval: %3\n"
-                             ).arg(type).arg(fileVal).arg(interval);
+    if (type.isEmpty() && fileVal.isEmpty()) return QString();
 
-    // 3. 读取现有文件
-    QString filePath = QDir::currentPath() + "/out.yml";
-    QFile file(filePath);
-    QStringList lines;
-
-    // 如果文件存在，先读取所有内容
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString content = file.readAll();
-        lines = content.split('\n');
-        file.close();
-    }
-
-    // 4. 查找旧的 powder 块并删除
-    int startIndex = -1;
-    int endIndex = -1;
-
-    for (int i = 0; i < lines.size(); ++i) {
-        if (lines[i].trimmed().startsWith("powder:")) {
-            startIndex = i;
-            break;
-        }
-    }
-
-    if (startIndex != -1) {
-        // 向下寻找块的结束
-        endIndex = startIndex;
-        for (int i = startIndex + 1; i < lines.size(); ++i) {
-            QString line = lines[i];
-            QString trimmed = line.trimmed();
-
-            // 遇到空行或下一个顶级 Key (无缩进且不是注释) 则视为结束
-            if (trimmed.isEmpty() || line.startsWith("#")) {
-                endIndex = i;
-                continue;
-            }
-            if (!line.startsWith(" ") && !line.startsWith("\t")) {
-                endIndex = i - 1; // 回退一行，因为当前行是新 Key
-                break;
-            }
-            endIndex = i;
-        }
-
-        // 从后往前删除，避免索引错位
-        for (int i = endIndex; i >= startIndex; --i) {
-            if (i < lines.size()) lines.removeAt(i);
-        }
-    }
-
-    // 5. 插入新块
-    QStringList newLines = newSection.split('\n');
-
-    if (startIndex != -1) {
-        // 原地插入
-        int insertIdx = startIndex;
-        for(const QString& l : newLines) {
-            if(!l.trimmed().isEmpty()) lines.insert(insertIdx++, l);
-        }
-    } else {
-        // 追加到末尾
-        if(!lines.isEmpty() && !lines.last().isEmpty()) lines.append("");
-        for(const QString& l : newLines) {
-            if(!l.trimmed().isEmpty()) lines.append(l);
-        }
-    }
-
-    // 6. 写回文件
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        QTextStream out(&file);
-        out << lines.join("\n");
-        file.close();
-        qDebug() << "Powder settings written to" << filePath;
-    } else {
-        qCritical() << "Failed to open out.yml for writing:" << filePath;
-    }
+    QString yaml;
+    yaml += "powder:\n";
+    yaml += "    type: " + type + "\n";
+    yaml += "    file: " + fileVal + "\n";
+    yaml += "    particle_inteval: " + interval + "\n";
+    return yaml;
 }
 
 void PowderDlg::writeJsonFile()

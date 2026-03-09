@@ -2,3 +2,8 @@ build/
 AM-FEMP2/
 Multi-physics simulator.pro.user/
 *.pro.user
+ui_*.h
+Makefile
+Makefile.*
+.qmake.stash
+*_resource.rc

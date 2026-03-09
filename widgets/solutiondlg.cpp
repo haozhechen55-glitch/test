@@ -12,7 +12,7 @@ SolutionDlg::SolutionDlg(QWidget *parent)
 {
     ui->setupUi(this);
     if (ui->maincontainer_sol) {
-        // 这一步会将 mainContainer 从原来的位置“移动”到内容布局中
+        // 这一步会将 mainContainer 从原来的位置"移动"到内容布局中
         this->contentLayout()->addWidget(ui->maincontainer_sol);
 
         // 确保容器可见（有时候从 setupUi 出来默认可能是隐藏的，视 UI 设置而定）
@@ -20,6 +20,15 @@ SolutionDlg::SolutionDlg(QWidget *parent)
     }
     // 3. 设置标题栏文本
     setWindowTitleText("Solution");
+
+    // 创建 interface_damp 和 FEM_damp 控件（UI 文件中未定义，在此动态添加）
+    lineEdit_interface_damp = new QLineEdit("0", this);
+    lineEdit_interface_damp->setObjectName("lineEdit_interface_damp");
+    lineEdit_interface_damp->setVisible(false);
+
+    lineEdit_FEM_damp = new QLineEdit("0", this);
+    lineEdit_FEM_damp->setObjectName("lineEdit_FEM_damp");
+    lineEdit_FEM_damp->setVisible(false);
 }
 
 SolutionDlg::~SolutionDlg()
@@ -31,7 +40,7 @@ SolutionDlg::~SolutionDlg()
 QString SolutionDlg::getSolverYaml()
 {
     QString solver   = ui->comboBox_solver->currentText();
-    QString model    = ui->comboBox_model->currentText();
+    QString model = ui->comboBox_model->currentText();
     QString fluidStr = ui->comboBox_solve_fluid->currentText();
     QString solidStr = ui->comboBox_solve_solid->currentText();
 
@@ -57,27 +66,27 @@ QString SolutionDlg::getMPMYaml()
     QString maxPpc = ui->lineEdit_max_point_per_cell->text().trimmed();
     QString MPM_damp = ui->lineEdit_MPM_damp->text().trimmed();
     QString PIC_damp = ui->lineEdit_PIC_damp->text().trimmed();
-    // 默认值，界面上如果没有对应控件，可以硬编码或添加控件
-    QString interface_damp = "0";
-    QString FEM_damp = "0";
+    QString interface_damp = lineEdit_interface_damp->text().trimmed();
+    QString FEM_damp = lineEdit_FEM_damp->text().trimmed();
 
     if (ppc1.isEmpty()) ppc1 = "3"; // 防止为空的保护机制
     if (ppc2.isEmpty()) ppc2 = "3";
     if (ppc3.isEmpty()) ppc3 = "3";
 
-    return QString("interface_damp: %1\n"
+    QString result = QString("interface_damp: %1\n"
                    "MPM_damp: %2\n"
                    "# FEM_damp: %3\n"
                    "PIC_damp: %4\n"
                    "\n"
                    "point_per_cell: [%5,%6,%7]\n"
                    "rearrange: %8\n"
-                   "max_point_per_cell: %9\n"
-                   "min_point_per_cell: %10\n")
-        .arg(interface_damp).arg(MPM_damp).arg(FEM_damp).arg(PIC_damp)
-        .arg(ppc1).arg(ppc2).arg(ppc3)
+                   "max_point_per_cell: %9\n")
+        .arg(interface_damp, MPM_damp, FEM_damp, PIC_damp)
+        .arg(ppc1, ppc2, ppc3)
         .arg(rearrange ? "true" : "false")
-        .arg(maxPpc).arg(minPpc);
+        .arg(maxPpc);
+    result += QString("min_point_per_cell: %1\n").arg(minPpc);
+    return result;
 }
 
 // 实现 getTimeYaml
@@ -119,11 +128,12 @@ void SolutionDlg::saveSolver() { /* 可选：仅做界面校验 */ }
             return;
         }
 
-        // 3. 正向反馈：告诉用户“没问题了”
-        // 关键话术：表明这是“暂存”或“已确认”，并引导去主界面保存
+        // 3. 正向反馈：告诉用户"没问题了"
+        // 关键话术：表明这是"暂存"或"已确认"，并引导去主界面保存
         Toast::instance().show(Toast::TINFO,
                                "Time settings confirmed.\n(Please click 'Save' in Main Window to write file)",
                                this);
+        emit sigAddSolution("Solution");
     }
     void SolutionDlg::on_pushButton_MPM_clicked()
     {
@@ -137,6 +147,7 @@ void SolutionDlg::saveSolver() { /* 可选：仅做界面校验 */ }
         Toast::instance().show(Toast::TINFO,
                                "MPM parameters ready.\nDon't forget to Save the project!",
                                this);
+        emit sigAddSolution("Solution");
     }
 
 

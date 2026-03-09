@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
+    <width>517</width>
     <height>294</height>
    </rect>
   </property>
@@ -46,6 +46,18 @@ font: 700 9pt &quot;Yu Gothic&quot;;
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_XMin">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>
@@ -65,6 +77,18 @@ border:1px solid gray;</string>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_XMax">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>
@@ -84,6 +108,18 @@ border:1px solid gray;</string>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_YMin">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>
@@ -103,6 +139,18 @@ border:1px solid gray;</string>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_YMax">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>
@@ -122,6 +170,18 @@ border:1px solid gray;</string>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_ZMin">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>
@@ -141,6 +201,18 @@ border:1px solid gray;</string>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_ZMax">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">border-radius:3px;
 border:1px solid gray;</string>

@@ -18,6 +18,9 @@ public:
 
     bool getWriteAllFields() const;
     bool getDetailedLog() const;
+
+    // 从 UI 控件同步内部成员变量（反序列化后调用）
+    void syncFromUI();
     // 【修改点 1】新增：只负责生成 YAML 字符串，不写文件
     QString getOutputYaml();
 

@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QString>
 #include <QList>
+#include <atomic>
 
 class VtkLoaderThread : public QThread
 {
@@ -13,6 +14,7 @@ class VtkLoaderThread : public QThread
 public:
     explicit VtkLoaderThread(QObject *parent = nullptr);
     void setDirectory(const QString &dirPath);
+    void cancel() { m_cancel.store(true); }
 
 signals:
     void fileLoadingProgress(int percent);          // 加载进度 [0~100]
@@ -25,7 +27,7 @@ protected:
 
 private:
     QString m_dirPath;
-    bool m_cancel = false;
+    std::atomic<bool> m_cancel{false};
 };
 
 #endif // VTKLOADER_THREAD_H

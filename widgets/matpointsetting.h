@@ -13,11 +13,14 @@ class MatPointSetting : public FramelessBaseDialog
 public:
     explicit MatPointSetting(QWidget *parent = nullptr);
     ~MatPointSetting();
-    void writeMatPointToYml(const QString& type, const QString& Dx, const QString& Dy, const QString& Dz,
-                                         const QString& Xmin, const QString& Ymin, const QString& Zmin,
-                                        const QString& Xmax, const QString& Ymax, const QString& Zmax);
+
+    // 设置当前编辑的节点名称（空表示新建）
+    void setTargetNodeName(const QString &name);
 
     void writeJsonFile();
+
+    QString getYamlSection() const;
+
 private slots:
 
     void on_pushButton_OK_clicked();
@@ -29,6 +32,7 @@ signals:
 
 private:
     Ui::MatPointSetting *ui;
+    QString m_currentEditingNode;
 signals:
     void sigName(QString name);
     void sigJsonWriteFinish();

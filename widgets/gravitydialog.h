@@ -24,6 +24,12 @@ public:
     // 获取名称（可选，不写入 YAML）
     QString getName() const;
 
+    // 返回 gravity: YAML 段落
+    QString getYamlSection() const;
+
+    // 从 UI 控件同步内部成员变量（反序列化后调用）
+    void syncFromUI();
+
 private slots:
     void on_pushButton_ok_clicked();
     void on_pushButton_cancel_clicked();

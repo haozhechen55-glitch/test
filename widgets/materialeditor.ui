@@ -259,7 +259,7 @@ QLineEdit:disabled, QComboBox:disabled {
 </string>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab_Solid">
               <attribute name="title">
@@ -1289,7 +1289,7 @@ QLineEdit:disabled, QComboBox:disabled {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="liquidus_temperature"/>
+                        <widget class="QLineEdit" name="solidus_temperature"/>
                        </item>
                       </layout>
                      </item>
@@ -1315,7 +1315,7 @@ QLineEdit:disabled, QComboBox:disabled {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="solidus_temperature"/>
+                        <widget class="QLineEdit" name="liquidus_temperature"/>
                        </item>
                       </layout>
                      </item>

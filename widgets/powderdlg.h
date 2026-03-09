@@ -20,6 +20,9 @@ public:
     void setTargetNodeName(const QString &name);
     void writeJsonFile();
 
+    // 返回 powder: YAML 段落
+    QString getYamlSection() const;
+
 signals:
     // 通知主界面添加/更新树节点
     void sigAddPowder(QString name);
@@ -35,9 +38,6 @@ private slots:
 private:
     Ui::PowderDlg *ui;
     QString m_currentEditingNode;
-
-    // 写入 YAML 的核心逻辑
-    void writeToYaml();
 };
 
 #endif // POWDERDLG_H

@@ -161,6 +161,11 @@ QLineEdit:disabled, QComboBox:disabled {
                      <string>MPM</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>SMP</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>

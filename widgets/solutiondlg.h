@@ -2,6 +2,7 @@
 #define SOLUTIONDLG_H
 
 #include <QDialog>
+#include <QLineEdit>
 #include "framelessbasedialog.h"
 
 namespace Ui {
@@ -41,6 +42,8 @@ signals:
 
 private:
     QString m_currentEditingNode;
+    QLineEdit *lineEdit_interface_damp;
+    QLineEdit *lineEdit_FEM_damp;
 };
 
 #endif // SOLUTIONDLG_H

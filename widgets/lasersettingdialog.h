@@ -21,6 +21,9 @@ public:
     // 获取 YAML 格式的 laser 段内容（不含 "laser:" 前缀）
     QString getYamlSection() const;
 
+    // 设置当前编辑的节点名称（空表示新建）
+    void setTargetNodeName(const QString &name);
+
 private slots:
     void onOkClicked();
     void onCancelClicked();
@@ -42,6 +45,7 @@ private:
     QHBoxLayout *buttonLayout;
 
     QString yamlSection; // 存储生成的 YAML 内容
+    QString m_currentEditingNode; // 当前编辑的节点名称
 
     // 辅助函数：将一列数据转换为 "[a,b,c]" 格式
     QString columnToYamlList(int colIndex) const;

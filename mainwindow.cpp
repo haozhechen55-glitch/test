@@ -139,7 +139,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
                                   QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
     if (reply == QMessageBox::Yes) {
-        // --- 用户选择“是” ---
+        // --- 用户选择"是" ---
 
         // 1. 调用保存功能
         on_toolButton_save_clicked();
@@ -154,12 +154,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
 
     } else if (reply == QMessageBox::No) {
-        // --- 用户选择“否” ---
+        // --- 用户选择"否" ---
         // 直接关闭，不保存
         event->accept();
 
     } else {
-        // --- 用户选择“取消” ---
+        // --- 用户选择"取消" ---
         // 撤销关闭操作，停留在当前界面
         event->ignore();
     }
@@ -170,11 +170,11 @@ void MainWindow::changeEvent(QEvent *event)
     // 如果是窗口状态改变事件（如最大化、最小化、还原）
     if (event->type() == QEvent::WindowStateChange) {
         if (this->isMaximized()) {
-            // 当前是最大化状态，按钮应该显示“还原”图标
+            // 当前是最大化状态，按钮应该显示"还原"图标
             ui->toolButton_max->setText("❐");
             ui->toolButton_max->setToolTip("Restore");
         } else {
-            // 当前是正常状态，按钮应该显示“最大化”图标
+            // 当前是正常状态，按钮应该显示"最大化"图标
             ui->toolButton_max->setText("☐");
             ui->toolButton_max->setToolTip("Maximize");
         }
@@ -248,53 +248,14 @@ void MainWindow::initTree()
 
     // 连接点击信号（可选）
     connect(ui->treeView_left, &QTreeView::clicked, this, [=](const QModelIndex &index) {
-        QString text = m_model->data(index, Qt::DisplayRole).toString();
-        qDebug() << "Clicked:" << text;
-        if(text.contains("Body"))
-        {
+        QStandardItem *item = m_model->itemFromIndex(index);
+        if (!item) return;
 
-        }
-        if(text.contains("B-G Grid"))
-        {
-            m_bggridDlg->show();
-        }
-        if(text.contains("Mat-Point"))
-        {
-            m_matPointdlg->show();
-        }
-        if(text.contains("Material"))
-        {
-            m_material->show();
-        }
-        if(text.contains("Laser"))
-        {
-            m_LaserDlg->show();
-        }
-        if(text.contains("Component"))
-        {
+        // Walk up to root category
+        QStandardItem *rootItem = item->parent() ? item->parent() : item;
+        QString rootName = rootItem->text();
 
-        }
-        if(text.contains("Init-conditions"))
-        {
-            m_initialDlg ->show();                                                          //HZ Chen
-        }
-        if(text.contains("Load"))
-        {
-            m_load->show();
-        }
-        if(text.contains("OutPut"))
-        {
-            m_output->show();
-        }
-        if(text.contains("Solution"))
-        {
-            m_solution->show();
-        }
-        if(text.contains("Boundary"))
-        {
-            m_boundaryDlg->show();
-        }
-        // 你可以在这里触发页面切换、功能调用等
+        openDialogForCategory(rootName);
     });
 }
 
@@ -318,264 +279,73 @@ void MainWindow::addSubItems(const QString &parentName, const QStringList &subIt
     ui->treeView_left->expand(parentIndex);
 }
 
+void MainWindow::openDialogForCategory(const QString &rootCategoryName)
+{
+    if (rootCategoryName == "B-G Grid")             m_bggridDlg->show();
+    else if (rootCategoryName == "Mat-Point")        m_matPointdlg->show();
+    else if (rootCategoryName == "Material")         m_material->show();
+    else if (rootCategoryName == "Laser")            m_LaserDlg->show();
+    else if (rootCategoryName == "Init-conditions")  m_initialDlg->show();
+    else if (rootCategoryName == "Load")             m_load->show();
+    else if (rootCategoryName == "Boundary")         m_boundaryDlg->show();
+    else if (rootCategoryName == "OutPut")           m_output->show();
+    else if (rootCategoryName == "Solution")         m_solution->show();
+    else if (rootCategoryName == "Powder")           m_powderDlg->show();
+    // "Body" and "Component" have no dialogs
+}
+
+void MainWindow::ensureSingleChild(const QString &rootCategoryName, const QString &childName)
+{
+    QStandardItem *rootItem = m_rootItemsMap.value(rootCategoryName);
+    if (!rootItem) return;
+
+    if (rootItem->rowCount() > 0) {
+        // Already has a child -> just rename it
+        rootItem->child(0)->setText(childName);
+    } else {
+        // No child yet -> create one
+        QStandardItem *subItem = new QStandardItem(childName);
+        subItem->setEditable(false);
+        rootItem->appendRow(subItem);
+        ui->treeView_left->expand(m_model->indexFromItem(rootItem));
+    }
+}
+
 bool MainWindow::writeDefaultYml()
 {
     QString filePath = QDir::currentPath() + "/out.yml";
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        // 处理文件打开失败的情况
         return false;
     }
-    QTextStream out(&file);
-    out << "# \n";
-    out << "\n";
-    out << "solver: SMP\n";
-    out << "model: SLM\n";
-    out << "\n";
-    out << "solve_fluid: true\n";
-    out << "solve_solid: true\n";
-
     file.close();
     return true;
 }
 
-void MainWindow::onAddLaserItem(QString name)
-{
-    if (m_isEditMode && m_editingItem != nullptr)
-    {
-        // --- 编辑模式：只修改现有节点的名字 ---
-        m_editingItem->setText(name);
-
-        // 可以在这里打印日志或更新内部数据映射
-        qDebug() << "Updated node to:" << name;
-    }
-    else
-    {
-        QStringList nameList;
-        nameList<<name;
-        addSubItems("Laser",nameList);
-    }
-    // 操作完成后，建议重置状态，防止干扰下次操作
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-void MainWindow::onAddBoundary(QString name)
-{
-    if (m_isEditMode && m_editingItem != nullptr)
-    {
-        // --- 编辑模式：只修改现有节点的名字 ---
-        m_editingItem->setText(name);
-
-        // 可以在这里打印日志或更新内部数据映射
-        qDebug() << "Updated node to:" << name;
-    }
-    else
-    {
-    QStringList nameList;
-    nameList<<name;
-    addSubItems("Boundary",nameList);
-    }
-    // 操作完成后，建议重置状态，防止干扰下次操作
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-void MainWindow::onAddBGgrid(QString name)
-{
-    if (m_isEditMode && m_editingItem != nullptr)
-    {
-        // --- 编辑模式：只修改现有节点的名字 ---
-        m_editingItem->setText(name);
-
-        // 可以在这里打印日志或更新内部数据映射
-        qDebug() << "Updated node to:" << name;
-    }
-    else
-    {
-    QStringList nameList;
-    nameList<<name;
-    addSubItems("B-G Grid",nameList);
-    }
-    // 操作完成后，建议重置状态，防止干扰下次操作
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-void MainWindow::onAddMatPoint(QString name)
-{
-
-    if (m_isEditMode && m_editingItem != nullptr)
-    {
-        // --- 编辑模式：只修改现有节点的名字 ---
-        m_editingItem->setText(name);
-
-        // 可以在这里打印日志或更新内部数据映射
-        qDebug() << "Updated node to:" << name;
-    }
-    else
-    {
-    QStringList nameList;
-    nameList<<name;
-    addSubItems("Mat-Point",nameList);
-    }
-    // 操作完成后，建议重置状态，防止干扰下次操作
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-void MainWindow::onAddMaterial(QString name)
-{
-    if (m_isEditMode && m_editingItem != nullptr)
-    {
-        // --- 编辑模式：只修改现有节点的名字 ---
-        m_editingItem->setText(name);
-
-        // 可以在这里打印日志或更新内部数据映射
-        qDebug() << "Updated node to:" << name;
-    }
-    else
-    {
-    QStringList nameList;
-    nameList<<name;
-    addSubItems("Material",nameList);
-    }
-    // 操作完成后，建议重置状态，防止干扰下次操作
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-// mainwindow.cpp
-
-// === Gravity (Load) ===
-void MainWindow::onAddGravity(QString name) {
-    // 【统一风格】判断是否为编辑模式
-    if (m_isEditMode && m_editingItem) {
-        m_editingItem->setText(name); // 只改名，不新增
-        qDebug() << "Updated Gravity node to:" << name;
-    } else {
-        // 新增模式：调用 addSubItems 或手动 appendRow
-        addSubItems("Load", QStringList() << name);
-    }
-    // 【统一风格】重置状态
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-// === Init-conditions ===
-void MainWindow::onAddInitTemp(QString name) {
-    if (m_isEditMode && m_editingItem) {
-        m_editingItem->setText(name);
-    } else {
-        addSubItems("Init-conditions", QStringList() << name);
-    }
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-// === Output ===
-void MainWindow::onAddOutput(QString name) {
-    if (m_isEditMode && m_editingItem) {
-        m_editingItem->setText(name);
-    } else {
-        addSubItems("OutPut", QStringList() << name);
-    }
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-// === Solution ===
-void MainWindow::onAddSolution(QString name) {
-    if (m_isEditMode && m_editingItem) {
-        m_editingItem->setText(name);
-    } else {
-        addSubItems("Solution", QStringList() << name);
-    }
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
-
-void MainWindow::onAddPowder(QString name)
-{
-    if (m_isEditMode && m_editingItem != nullptr) {
-        m_editingItem->setText(name);
-    } else {
-        addSubItems("Powder", QStringList() << name);
-    }
-    m_isEditMode = false;
-    m_editingItem = nullptr;
-}
+void MainWindow::onAddLaserItem(QString name) { ensureSingleChild("Laser", name); generateFullYaml(); }
+void MainWindow::onAddBoundary(QString name)  { ensureSingleChild("Boundary", name); generateFullYaml(); }
+void MainWindow::onAddBGgrid(QString name)    { ensureSingleChild("B-G Grid", name); generateFullYaml(); }
+void MainWindow::onAddMatPoint(QString name)  { ensureSingleChild("Mat-Point", name); generateFullYaml(); }
+void MainWindow::onAddMaterial(QString name)  { ensureSingleChild("Material", name); generateFullYaml(); }
+void MainWindow::onAddGravity(QString name)   { ensureSingleChild("Load", name); generateFullYaml(); }
+void MainWindow::onAddInitTemp(QString name)  { ensureSingleChild("Init-conditions", name); generateFullYaml(); }
+void MainWindow::onAddOutput(QString name)    { ensureSingleChild("OutPut", name); generateFullYaml(); }
+void MainWindow::onAddSolution(QString name)  { ensureSingleChild("Solution", name); generateFullYaml(); }
+void MainWindow::onAddPowder(QString name)    { ensureSingleChild("Powder", name); generateFullYaml(); }
 
 //Preprocess—B-G grid
-void MainWindow::on_toolButton_B_G_grid_clicked()
-{
-    m_bggridDlg->show();
-
-}
-
-
-void MainWindow::on_toolButton_MatPoint_clicked()
-{
-    m_matPointdlg->show();
-}
-
-
-void MainWindow::on_toolButton_open_5_clicked()
-{
-    m_material->show();
-}
-
-
-void MainWindow::on_toolButton_open_Laser_clicked()
-{
-    m_LaserDlg->show();
-}
-
-
-void MainWindow::on_toolButton_Global_clicked()
-{
-    m_material->show();
-}
-
-
-void MainWindow::on_toolButton_Inital_clicked()
-{
-    m_initialDlg->show();
-}
-
-
-void MainWindow::on_toolButton_Load_clicked()
-{
-    m_load->show();
-}
-
-
-void MainWindow::on_toolButton_open_Boundary_clicked()
-{
-    m_boundaryDlg->show();
-}
-
-
-void MainWindow::on_toolButton_output_clicked()
-{
-    m_output->show();
-}
-
-
-void MainWindow::on_toolButton_solution_clicked()
-{
-    m_solution->show();
-}
-
-void MainWindow::on_toolButton_powder_clicked()
-{
-    // 点击按钮显示对话框
-    if (m_powderDlg) {
-        m_powderDlg->setTargetNodeName(""); // 清空编辑状态，视为新建/全局设置
-        m_powderDlg->show();
-    }
-}
+void MainWindow::on_toolButton_B_G_grid_clicked()     { openDialogForCategory("B-G Grid"); }
+void MainWindow::on_toolButton_MatPoint_clicked()      { openDialogForCategory("Mat-Point"); }
+void MainWindow::on_toolButton_open_5_clicked()        { openDialogForCategory("Material"); }
+void MainWindow::on_toolButton_open_Laser_clicked()    { openDialogForCategory("Laser"); }
+void MainWindow::on_toolButton_Global_clicked()        { openDialogForCategory("Material"); }
+void MainWindow::on_toolButton_Inital_clicked()        { openDialogForCategory("Init-conditions"); }
+void MainWindow::on_toolButton_Load_clicked()          { openDialogForCategory("Load"); }
+void MainWindow::on_toolButton_open_Boundary_clicked() { openDialogForCategory("Boundary"); }
+void MainWindow::on_toolButton_output_clicked()        { openDialogForCategory("OutPut"); }
+void MainWindow::on_toolButton_solution_clicked()      { openDialogForCategory("Solution"); }
+void MainWindow::on_toolButton_powder_clicked()        { openDialogForCategory("Powder"); }
 
 void MainWindow::on_toolButton_run_clicked()
 {
@@ -676,89 +446,96 @@ void MainWindow::on_toolButton_run_clicked()
 // 【修改点 1】实现全量 YAML 组装逻辑
 void MainWindow::generateFullYaml()
 {
-    QString filePath = m_currentProjectDir + "/out.yml"; // 确保路径正确
+    if (m_currentProjectDir.isEmpty()) {
+        QMessageBox::warning(this, "Error", "No project directory set. Please create or open a project first.");
+        return;
+    }
+    QString filePath = m_currentProjectDir + "/out.yml";
     QFile file(filePath);
-    QStringList preservedLines;
-
-    // === A. 定义主界面“接管”了哪些 Key (遇到这些开头的旧内容要扔掉，用新的替换) ===
-    QSet<QString> managedKeys = {
-        // SolutionDlg 负责的:
-        "solver:", "model:", "solve_fluid:", "solve_solid:",
-        "interface_damp:", "MPM_damp:", "FEM_damp:", "PIC_damp:",
-        "point_per_cell:", "rearrange:", "max_point_per_cell:", "min_point_per_cell:",
-        "time:",
-        // OutputSettingDialog 负责的:
-        "output:"
-    };
-
-    // === B. 读取旧文件，保留“未接管”的部分 (如 laser, background_mesh) ===
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream in(&file);
-        bool skipSection = false; // 标记是否正在跳过一个被接管的段落
-
-        while (!in.atEnd()) {
-            QString line = in.readLine();
-            QString trimmed = line.trimmed();
-
-            // 1. 保留空行和注释
-            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
-                if (!skipSection) preservedLines.append(line);
-                continue;
-            }
-
-            // 2. 检查是否是顶级 Key (无缩进)
-            if (!line.startsWith(" ") && !line.startsWith("\t")) {
-                QString key = trimmed.split(":").first() + ":";
-
-                if (managedKeys.contains(key)) {
-                    // 这是一个我们要重写的 Key，开启跳过模式
-                    skipSection = true;
-                } else {
-                    // 这是一个我们要保留的 Key (比如 laser:)，关闭跳过模式
-                    skipSection = false;
-                    preservedLines.append(line);
-                }
-            } else {
-                // 3. 处理有缩进的子项
-                if (!skipSection) {
-                    preservedLines.append(line); // 如果不在跳过模式，就保留
-                }
-            }
-        }
-        file.close();
-    }
-
-    // === C. 组装新内容 ===
-    QString newContent;
-
-    // 1. [Solution] 头部信息 (Solver, Model...)
-    // 确保你已经在 solutiondlg.cpp 里实现了 getSolverYaml()
-    if (m_solution) newContent += m_solution->getSolverYaml() + "\n";
-
-    // 2. [Solution] MPM 参数
-    if (m_solution) newContent += m_solution->getMPMYaml() + "\n";
-
-    // 3. [Solution] Time 参数
-    if (m_solution) newContent += m_solution->getTimeYaml() + "\n";
-
-    // 4. [Preserved] 插入保留的旧内容 (Laser, Grid 等)
-    if (!preservedLines.isEmpty()) {
-        newContent += preservedLines.join("\n") + "\n\n";
-    }
-
-    // 5. [Output] 输出设置 (放在最后比较整齐)
-    // 调用刚才在 OutputSettingDialog 新写的函数
-    if (m_output) newContent += m_output->getOutputYaml() + "\n";
-
-    // === D. 写入文件 ===
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        QTextStream out(&file);
-        out << newContent;
-        file.close();
-        // 可以在这里打印日志： qDebug() << "out.yml updated successfully.";
-    } else {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         QMessageBox::warning(this, "Error", "Failed to write out.yml");
+        return;
     }
+
+    QString yaml;
+
+    // 1. Solver settings (SolutionDlg)
+    if (m_solution) {
+        QString s = m_solution->getSolverYaml();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 2. MPM parameters (SolutionDlg)
+    if (m_solution) {
+        QString s = m_solution->getMPMYaml();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 3. Time settings (SolutionDlg)
+    if (m_solution) {
+        QString s = m_solution->getTimeYaml();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 4. Background mesh + fixed_boundary
+    if (m_bggridDlg) {
+        QString fixedBoundary;
+        if (m_boundaryDlg) fixedBoundary = m_boundaryDlg->getFixedBoundaryYaml();
+        QString s = m_bggridDlg->getYamlSection(fixedBoundary);
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 5. Material point
+    if (m_matPointdlg) {
+        QString s = m_matPointdlg->getYamlSection();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 6. Material + reference_temperature
+    if (m_material) {
+        QString refTemp;
+        if (m_initialDlg) refTemp = m_initialDlg->getReferenceTemperature();
+        QString s = m_material->getYamlSection(refTemp);
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 7. Laser
+    if (m_LaserDlg) {
+        QString s = m_LaserDlg->getYamlSection();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 8. Gravity
+    if (m_load) {
+        QString s = m_load->getYamlSection();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 9. Field / temperature boundary
+    if (m_boundaryDlg) {
+        QString initialTemp = "300";
+        if (m_initialDlg) {
+            QString t = m_initialDlg->getReferenceTemperature();
+            if (!t.isEmpty()) initialTemp = t;
+        }
+        QString s = m_boundaryDlg->getFieldYamlSection(initialTemp);
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 10. Powder
+    if (m_powderDlg) {
+        QString s = m_powderDlg->getYamlSection();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    // 11. Output
+    if (m_output) {
+        QString s = m_output->getOutputYaml();
+        if (!s.isEmpty()) yaml += s + "\n";
+    }
+
+    file.write(yaml.toUtf8());
+    file.close();
 }
 
 
@@ -821,9 +598,9 @@ QJsonObject MainWindow::serializeDialog(QWidget *dlg)
     for (QLineEdit *e : dlg->findChildren<QLineEdit *>()) {
         if (!e->objectName().isEmpty()) obj[e->objectName()] = e->text();
     }
-    // 处理 ComboBox
+    // 处理 ComboBox（按文本保存，避免索引在版本间不一致）
     for (QComboBox *c : dlg->findChildren<QComboBox *>()) {
-        if (!c->objectName().isEmpty()) obj[c->objectName()] = c->currentIndex();
+        if (!c->objectName().isEmpty()) obj[c->objectName()] = c->currentText();
     }
     // 处理 CheckBox
     for (QCheckBox *b : dlg->findChildren<QCheckBox *>()) {
@@ -867,7 +644,15 @@ void MainWindow::deserializeDialog(QWidget *dlg, const QJsonObject &data)
         if (e) { e->setText(it.value().toString()); continue; }
 
         QComboBox *c = dlg->findChild<QComboBox *>(key);
-        if (c) { c->setCurrentIndex(it.value().toInt()); continue; }
+        if (c) {
+            if (val.isString()) {
+                int idx = c->findText(val.toString());
+                if (idx >= 0) c->setCurrentIndex(idx);
+            } else {
+                c->setCurrentIndex(val.toInt());
+            }
+            continue;
+        }
 
         QCheckBox *b = dlg->findChild<QCheckBox *>(key);
         if (b) { b->setChecked(it.value().toBool()); continue; }
@@ -878,8 +663,10 @@ void MainWindow::deserializeDialog(QWidget *dlg, const QJsonObject &data)
         QTableWidget *t = dlg->findChild<QTableWidget *>(key);
         if (t && val.isArray()) {
             QJsonArray tableArray = val.toArray();
-            // 如果需要根据数据动态调整行数，取消下面注释
-            // t->setRowCount(tableArray.size());
+            // 确保表格行数足够容纳所有数据
+            if (tableArray.size() > t->rowCount()) {
+                t->setRowCount(tableArray.size());
+            }
             for (int r = 0; r < qMin(tableArray.size(), t->rowCount()); ++r) {
                 QJsonArray rowData = tableArray[r].toArray();
                 for (int c = 0; c < qMin(rowData.size(), t->columnCount()); ++c) {
@@ -913,6 +700,17 @@ void MainWindow::on_toolButton_save_clicked()
     root["OutputSettingDialog"] = serializeDialog(m_output);
     root["SolutionDlg"] = serializeDialog(m_solution);
 
+    // 保存导航树节点状态（S5 修复）
+    QJsonObject treeState;
+    for (auto it = m_rootItemsMap.begin(); it != m_rootItemsMap.end(); ++it) {
+        QJsonArray children;
+        for (int i = 0; i < it.value()->rowCount(); ++i) {
+            QStandardItem *child = it.value()->child(i);
+            if (child) children.append(child->text());
+        }
+        treeState[it.key()] = children;
+    }
+    root["TreeState"] = treeState;
 
     QString projectName = QFileInfo(m_currentProjectDir).fileName();
     QString simPath = m_currentProjectDir + "/" + projectName + ".sim";
@@ -998,24 +796,41 @@ void MainWindow::loadProjectLogic(const QString &simFilePath)
     QDir::setCurrent(m_currentProjectDir);
 
     // 恢复各个对话框的状态（如果指针为空则 new）
-    auto restore = [&](QWidget** dlgPtr, const QString& key, auto factory) {
+    auto restore = [&](auto& dlgPtr, const QString& key, auto factory) {
         if (root.contains(key)) {
-            if (!(*dlgPtr)) *dlgPtr = factory();
+            if (!dlgPtr) dlgPtr = factory();
             // 这里调用我们之前定义的序列化工具
-            deserializeDialog(*dlgPtr, root[key].toObject());
+            deserializeDialog(dlgPtr, root[key].toObject());
         }
     };
 
-    restore((QWidget**)&m_bggridDlg, "BGgridSetting", [this](){ return new BGgridSetting(this); });
-    restore((QWidget**)&m_matPointdlg, "MatPointSetting", [this](){ return new MatPointSetting(this); });
-    restore((QWidget**)&m_material, "MaterialEditor", [this](){ return new MaterialEditor(this); });
-    restore((QWidget**)&m_LaserDlg, "LaserSetting", [this](){ return new LaserSettingDialog(this); });
-    restore((QWidget**)&m_initialDlg, "InitialTemperatureDialog", [this](){ return new InitialTemperatureDialog(this); });
-    restore((QWidget**)&m_load, "GravityDialog", [this](){ return new GravityDialog(this); });
-    restore((QWidget**)&m_boundaryDlg, "BoundaryDlg", [this](){ return new BoundaryDlg(this); });
-    restore((QWidget**)&m_powderDlg, "PowderDlg", [this](){ return new PowderDlg(this); });
-    restore((QWidget**)&m_output, "OutputSettingDialog", [this](){ return new OutputSettingDialog(this); });
-    restore((QWidget**)&m_solution, "SolutionDlg", [this](){ return new SolutionDlg(this); });
+    restore(m_bggridDlg, "BGgridSetting", [this](){ return new BGgridSetting(this); });
+    restore(m_matPointdlg, "MatPointSetting", [this](){ return new MatPointSetting(this); });
+    restore(m_material, "MaterialEditor", [this](){ return new MaterialEditor(this); });
+    restore(m_LaserDlg, "LaserSetting", [this](){ return new LaserSettingDialog(this); });
+    restore(m_initialDlg, "InitialTemperatureDialog", [this](){ return new InitialTemperatureDialog(this); });
+    restore(m_load, "GravityDialog", [this](){ return new GravityDialog(this); });
+    restore(m_boundaryDlg, "BoundaryDlg", [this](){ return new BoundaryDlg(this); });
+    restore(m_powderDlg, "PowderDlg", [this](){ return new PowderDlg(this); });
+    restore(m_output, "OutputSettingDialog", [this](){ return new OutputSettingDialog(this); });
+    restore(m_solution, "SolutionDlg", [this](){ return new SolutionDlg(this); });
+
+    // 反序列化后同步内部成员变量（S2 修复）
+    if (m_load) m_load->syncFromUI();
+    if (m_initialDlg) m_initialDlg->syncFromUI();
+    if (m_output) m_output->syncFromUI();
+
+    // 恢复导航树节点状态（S5 修复）— 单子节点模式
+    if (root.contains("TreeState")) {
+        QJsonObject treeState = root["TreeState"].toObject();
+        for (auto it = treeState.begin(); it != treeState.end(); ++it) {
+            QJsonArray children = it.value().toArray();
+            if (!children.isEmpty()) {
+                // Single-child model: only restore the first child
+                ensureSingleChild(it.key(), children[0].toString());
+            }
+        }
+    }
 
     // 【新增修复】强制将加载到界面的数据写入 config_temp.json
     // ==========================================================
@@ -1042,6 +857,13 @@ void MainWindow::loadProjectLogic(const QString &simFilePath)
     }
     // 这会启动 PreVisGenerator.exe，生成 preview.vtu，并自动显示在前处理 Tab 页
     this->onJsonDataUpdate();
+
+    // S6 修复：反序列化后重新触发 ComboBox 依赖的 UI 更新
+    // blockSignals 期间信号被屏蔽，需要手动触发一次以刷新动态 UI
+    if (m_bggridDlg) {
+        QComboBox *c = m_bggridDlg->findChild<QComboBox*>("comboBox");
+        if (c) emit c->currentIndexChanged(c->currentIndex());
+    }
 
     qDebug() << "Project loaded. Triggered PreVisGenerator for preview.";
 }
@@ -1191,7 +1013,7 @@ void MainWindow::on_toolButton_play_clicked()
         // ==========================
         this->m_timer->stop();
 
-        // 【UI变换】：既然暂停了，图标要变回“播放”箭头，提示用户可以继续播放
+        // 【UI变换】：既然暂停了，图标要变回"播放"箭头，提示用户可以继续播放
         ui->toolButton_play->setIcon(QIcon(":/img/play.png"));
         ui->toolButton_play->setToolTip(tr("开始播放"));
     }
@@ -1207,7 +1029,7 @@ void MainWindow::on_toolButton_play_clicked()
         }
         this->m_timer->start(100);
 
-        // 【UI变换】：既然开始跑了，图标要变成“双竖线(暂停)”，提示用户可以暂停
+        // 【UI变换】：既然开始跑了，图标要变成"双竖线(暂停)"，提示用户可以暂停
         ui->toolButton_play->setIcon(QIcon(":/img/pause.png"));
         ui->toolButton_play->setToolTip(tr("暂停播放"));
     }
@@ -1425,6 +1247,7 @@ void MainWindow::onVtuLoadFinished()
 
 
     vtkPointData* pd = data->GetPointData();
+    if (!pd) return;
 
     // 检查是否存在 radius 数组
     vtkDataArray* radiusArray = pd->GetArray("radius");
@@ -1488,7 +1311,7 @@ void MainWindow::onVtuLoadFinished()
     }
     ui->widget_vtk_post->renderWindow()->Render();
 
-    // 【新增】 自动切换到“后处理”页面 (假设索引1是后处理)
+    // 【新增】 自动切换到"后处理"页面 (假设索引1是后处理)
     ui->tabWidget_center->setCurrentIndex(1);
 
     ui->listWidget_frames->blockSignals(true);
@@ -1603,7 +1426,9 @@ void MainWindow::updateVtkColoring(const QString& attributeName)
     }
 
     // 1. 获取基础数据数组
-    vtkDataArray* dataArray = this->currentDataSet->GetPointData()->GetArray(attributeName.toStdString().c_str());
+    vtkPointData* pd = this->currentDataSet->GetPointData();
+    if (!pd) return;
+    vtkDataArray* dataArray = pd->GetArray(attributeName.toStdString().c_str());
     if (!dataArray) return;
 
     // 2. 解析分量索引 (Component Index)
@@ -1633,7 +1458,7 @@ void MainWindow::updateVtkColoring(const QString& attributeName)
         // 如果是第一次遇到这个属性，直接存入
         m_globalDataRanges[cacheKey] = qMakePair(currentRange[0], currentRange[1]);
     } else {
-        // 如果之前存过，对比并更新“历史最大/最小值”
+        // 如果之前存过，对比并更新"历史最大/最小值"
         auto& globalRange = m_globalDataRanges[cacheKey];
         if (currentRange[0] < globalRange.first) globalRange.first = currentRange[0];
         if (currentRange[1] > globalRange.second) globalRange.second = currentRange[1];
@@ -1763,205 +1588,57 @@ void MainWindow::on_toolButto_bottom_clicked()
 //                           新增/修改的完整逻辑代码
 // ==========================================================================
 
-// 1. 右键菜单逻辑（包含所有根节点的添加入口）
+// 1. Right-click context menu
 void MainWindow::onTreeCustomContextMenu(const QPoint &pos)
 {
     QModelIndex index = ui->treeView_left->indexAt(pos);
-    m_currentRightClickIndex = index; // 保存当前点击位置
+    m_currentRightClickIndex = index;
+    if (!index.isValid()) return;
 
     QMenu menu(this);
+    QStandardItem *item = m_model->itemFromIndex(index);
+    QStandardItem *parent = item->parent();
 
-    if (index.isValid()) {
-        QStandardItem *item = m_model->itemFromIndex(index);
-        QStandardItem *parent = item->parent();
+    if (parent) {
+        // Child node: Edit + Delete
+        QString parentName = parent->text();
+        menu.addAction(QIcon(":/img/edit.png"), "Edit", this, [=]() {
+            openDialogForCategory(parentName);
+        });
+        menu.addSeparator();
+        menu.addAction(QIcon(":/img/close.png"), "Delete", this, &MainWindow::onDeleteTreeItem);
+    } else {
+        // Root node
+        QString rootName = item->text();
+        if (rootName == "Body" || rootName == "Component") return;
 
-        // ----------------------------------------------------
-        // 情况 A：点击的是子项 (有父节点) -> 显示 Edit / Rename / Delete
-        // ----------------------------------------------------
-        if (parent) {
-            QAction *actEdit = menu.addAction(QIcon(":/img/edit.png"), "Edit");
-            connect(actEdit, &QAction::triggered, this, &MainWindow::onEditTreeItem);
-
-            QAction *actRename = menu.addAction("Rename");
-            connect(actRename, &QAction::triggered, this, &MainWindow::onRenameTreeItem);
-
-            menu.addSeparator();
-
-            QAction *actDel = menu.addAction(QIcon(":/img/close.png"), "Delete");
-            connect(actDel, &QAction::triggered, this, &MainWindow::onDeleteTreeItem);
-        }
-        // ----------------------------------------------------
-        // 情况 B：点击的是根节点 (无父节点) -> 显示 Add
-        // ----------------------------------------------------
-        else {
-            QString rootName = item->text();
-
-            // 为不同的根节点绑定不同的弹窗逻辑
-            menu.addAction("Add to " + rootName, this, [=](){
-
-            // 【核心修改 2】重置为新建模式
-            m_isEditMode = false;
-            m_editingItem = nullptr;
-
-                if(rootName == "Laser") {
-                    m_LaserDlg->show();
-                }
-                else if(rootName == "Material") {
-                    m_material->show();
-                }
-                else if(rootName == "B-G Grid") {
-                    m_bggridDlg->show();
-                }
-                else if(rootName == "Mat-Point") {
-                    m_matPointdlg->show();
-                }
-                else if(rootName == "Init-conditions") {
-                    m_initialDlg->show();
-                }
-                else if(rootName == "Load") {
-                    m_load->show();
-                }
-                else if(rootName == "Solution") {
-                    m_solution->show();
-                }
-                else if(rootName == "Boundary") {
-                    m_boundaryDlg->show();
-                }
-                else if(rootName == "OutPut") {
-                    m_output->show();
-                }
-                else if(rootName == "Load") {
-                    m_load->setTargetNodeName(""); // 标记新建
-                    m_load->show();
-                }
-                else if(rootName == "Init-conditions") {
-                    m_initialDlg->setTargetNodeName("");
-                    m_initialDlg->show();
-                }
-                else if(rootName == "OutPut") {
-                    m_output->setTargetNodeName("");
-                    m_output->show();
-                }
-                else if(rootName == "Solution") {
-                    m_solution->setTargetNodeName("");
-                    m_solution->show();
-                }
-                else if(rootName == "Body") {
-                    // Body 目前没有对应的弹窗，可以在这里加日志或提示
-                    qDebug() << "Add to Body clicked (No Dialog implemented)";
-                }
-                else if(rootName == "Component") {
-                    qDebug() << "Add to Component clicked (No Dialog implemented)";
-                }
-            });
-        }
+        QString label = (item->rowCount() > 0) ? "Edit settings" : ("Add to " + rootName);
+        menu.addAction(label, this, [=]() {
+            openDialogForCategory(rootName);
+        });
     }
     menu.exec(ui->treeView_left->mapToGlobal(pos));
 }
 
-// 2. 接收 LaserDialog 信号，添加节点到树
-
-// 3. 完整的编辑逻辑 (根据父节点类型打开对应窗口)
-void MainWindow::onEditTreeItem()
-{
-    if (!m_currentRightClickIndex.isValid()) return;
-
-    QStandardItem *item = m_model->itemFromIndex(m_currentRightClickIndex);
-    QStandardItem *parent = item->parent();
-
-    if (!parent) return; // 根节点不可编辑
-
-    QString parentName = parent->text();
-
-    // 【核心修改 1】进入编辑模式，记录目标
-    m_isEditMode = true;
-    m_editingItem = item; // 记住这个指针，等会儿改它名字
-
-    if (parentName == "Load") {
-        m_load->setTargetNodeName(item->text()); // 标记编辑 + 传名
-        m_load->show();
-    }
-    else if (parentName == "Init-conditions") {
-        m_initialDlg->setTargetNodeName(item->text());
-        m_initialDlg->show();
-    }
-    else if (parentName == "OutPut") {
-        m_output->setTargetNodeName(item->text());
-        m_output->show();
-    }
-    else if (parentName == "Solution") {
-        m_solution->setTargetNodeName(item->text());
-        m_solution->show();
-    }
-    else if (parentName == "Laser") {
-        m_LaserDlg->show();
-    }
-    else if (parentName == "Material") {
-        m_material->show();
-    }
-    else if (parentName == "B-G Grid") {
-        m_bggridDlg->show();
-    }
-    else if (parentName == "Mat-Point") {
-        m_matPointdlg->show();
-    }
-    else if (parentName == "Init-conditions") {
-        m_initialDlg->show();
-    }
-    else if (parentName == "Load") {
-        m_load->show();
-    }
-    else if (parentName == "Boundary") {
-        m_boundaryDlg->show();
-    }
-    else if (parentName == "Solution") {
-        m_solution->show();
-    }
-    else if (parentName == "OutPut") {
-        m_output->show();
-    }
-    else {
-        qDebug() << "No edit dialog for parent:" << parentName;
-    }
-}
-
-// 4. 完整的删除逻辑 (Laser 特殊处理 YAML，其他默认删除)
+// Delete tree item
 void MainWindow::onDeleteTreeItem()
 {
     if (!m_currentRightClickIndex.isValid()) return;
 
     QStandardItem *item = m_model->itemFromIndex(m_currentRightClickIndex);
     QStandardItem *parent = item->parent();
+
+    if (!parent) return; // Root nodes are not deletable
+
     QString itemName = item->text();
 
-    // 弹窗确认
     if (QMessageBox::question(this, "Confirm Delete",
                               "Are you sure you want to delete '" + itemName + "'?") != QMessageBox::Yes) {
         return;
     }
 
-    // 打印日志方便调试
-    if (parent) {
-        qDebug() << "Deleting item from tree:" << itemName << " (Parent:" << parent->text() << ")";
-    }
-
-    // 纯粹的 UI 删除，不涉及任何文件操作
     m_model->removeRow(m_currentRightClickIndex.row(), m_currentRightClickIndex.parent());
-    m_currentRightClickIndex = QModelIndex(); // 重置索引
-}
-
-// 5. 重命名逻辑
-void MainWindow::onRenameTreeItem()
-{
-    if (!m_currentRightClickIndex.isValid()) return;
-    QStandardItem *item = m_model->itemFromIndex(m_currentRightClickIndex);
-
-    bool ok;
-    QString newName = QInputDialog::getText(this, "Rename", "New Name:", QLineEdit::Normal, item->text(), &ok);
-
-    if (ok && !newName.isEmpty()) {
-        item->setText(newName);
-    }
+    m_currentRightClickIndex = QModelIndex();
 }
 
 
@@ -2030,6 +1707,7 @@ void MainWindow::setupPointGaussianMapper()
                                pow(bounds[3] - bounds[2], 2) +
                                pow(bounds[5] - bounds[4], 2));
             radius = diag * 0.005;
+            if (radius <= 0) radius = 0.01; // 兜底：避免所有点在同一位置时半径为0
             ui->LineEdit_GaussianRadius->setText(QString::number(radius, 'g', 4));
         }
         this->gaussianMapperPost->SetScaleFactor(radius);
@@ -2064,6 +1742,7 @@ void MainWindow::on_lineEdit_PointSize_editingFinished()
 {
     if (ui->comboBox_rendering->currentText() == "Points") {
         float size = ui->lineEdit_PointSize->text().toFloat();
+        if (size <= 0) return;
         this->actorPost->GetProperty()->SetPointSize(size);
         ui->widget_vtk_post->renderWindow()->Render();
     }
@@ -2135,44 +1814,4 @@ void MainWindow::on_comboBox_fenliang_currentTextChanged(const QString &arg1)
     }
 }
 
-QJsonObject serializeDialog(QWidget *dlg)
-{
-    if (!dlg) return QJsonObject();
-    QJsonObject obj;
-    // 处理所有 LineEdit (保留科学计数法字符串)
-    for (QLineEdit *e : dlg->findChildren<QLineEdit *>()) {
-        if (!e->objectName().isEmpty()) obj[e->objectName()] = e->text();
-    }
-    // 处理 ComboBox
-    for (QComboBox *c : dlg->findChildren<QComboBox *>()) {
-        if (!c->objectName().isEmpty()) obj[c->objectName()] = c->currentIndex();
-    }
-    // 处理 CheckBox
-    for (QCheckBox *b : dlg->findChildren<QCheckBox *>()) {
-        if (!b->objectName().isEmpty()) obj[b->objectName()] = b->isChecked();
-    }
-    return obj;
-}
-void deserializeDialog(QWidget *dlg, const QJsonObject &data)
-{
-    if (!dlg || data.isEmpty()) return;
-    for (auto it = data.begin(); it != data.end(); ++it) {
-        QString key = it.key();
-        QLineEdit *e = dlg->findChild<QLineEdit *>(key);
-        if (e) { e->setText(it.value().toString()); continue; }
-
-        QComboBox *c = dlg->findChild<QComboBox *>(key);
-        if (c) { c->setCurrentIndex(it.value().toInt()); continue; }
-
-        QCheckBox *b = dlg->findChild<QCheckBox *>(key);
-        if (b) { b->setChecked(it.value().toBool()); continue; }
-    }
-}
-void MainWindow::saveToSimFile(const QString &fileName) {
-
-}
-
-void MainWindow::loadFromSimFile(const QString &fileName) {
-
-}
-
+// （已移除未使用的独立 serializeDialog/deserializeDialog 函数和空桩 saveToSimFile/loadFromSimFile）

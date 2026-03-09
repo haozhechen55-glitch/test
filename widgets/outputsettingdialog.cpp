@@ -39,6 +39,12 @@ OutputSettingDialog::~OutputSettingDialog()
 bool OutputSettingDialog::getWriteAllFields() const { return writeAllFields; }
 bool OutputSettingDialog::getDetailedLog() const { return detailedLog; }
 
+void OutputSettingDialog::syncFromUI()
+{
+    writeAllFields = ui->checkBox_write_all_fields->isChecked();
+    detailedLog = ui->checkBox_detailed_log->isChecked();
+}
+
 void OutputSettingDialog::on_pushButton_ok_clicked() {
     writeAllFields = ui->checkBox_write_all_fields->isChecked();
     detailedLog = ui->checkBox_detailed_log->isChecked();

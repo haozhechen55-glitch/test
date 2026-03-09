@@ -74,8 +74,6 @@ public:
     void initTree();
     void addSubItems(const QString &parentName, const QStringList &subItems);
     bool writeDefaultYml();
-    void saveToSimFile(const QString &fileName);
-    void loadFromSimFile(const QString &fileName);
     QJsonObject serializeDialog(QWidget *dlg);
     void deserializeDialog(QWidget *dlg, const QJsonObject &data);
     void loadProjectLogic(const QString &simFilePath);
@@ -122,9 +120,7 @@ private slots:
     void onTreeCustomContextMenu(const QPoint &pos);
 
     // 具体动作槽函数
-    void onEditTreeItem();
     void onDeleteTreeItem();
-    void onRenameTreeItem();
 
     void on_toolButto_left_clicked();
 
@@ -189,16 +185,12 @@ private:
 
     QString m_currentProjectDir="";
 
-    // mainwindow.h 中的 private 部分添加：
-    QMap<QString, QAction*> m_actionMap; // 存储 名字 -> 动作 的映射
     // 记录当前右键选中的节点索引
     QModelIndex m_currentRightClickIndex;
-    // 【新增】用于标记当前的操作模式
-    bool m_isEditMode = false;
-    // 【新增】用于记录当前正在编辑的树节点指针
-    QStandardItem* m_editingItem = nullptr;
 
     void generateFullYaml();
+    void openDialogForCategory(const QString &rootCategoryName);
+    void ensureSingleChild(const QString &rootCategoryName, const QString &childName);
 
 
 

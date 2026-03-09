@@ -14,6 +14,12 @@ public:
     explicit MaterialEditor(QWidget *parent = nullptr);
     ~MaterialEditor();
 
+    // 设置当前编辑的节点名称（空表示新建）
+    void setTargetNodeName(const QString &name);
+
+    // 返回 material: YAML 段落（供 generateFullYaml 调用）
+    QString getYamlSection(const QString &referenceTemperature = QString()) const;
+
     // 定义本构模型枚举，方便代码可读性
     enum ModelType {
         ElasticPlastic = 0,
@@ -42,9 +48,6 @@ signals:
 
 private:
     Ui::MaterialEditor *ui;
-
-    // 辅助函数：生成 YAML 字符串
-    QString generateYamlString();
 
     // --- 成员变量 (Data Fields) ---
 
@@ -112,6 +115,8 @@ private:
     QString gas_viscosity = "1.48e-5";
     QString gas_thermal_conductivity = "0.02";
     QString gas_specific_heat = "1164";
+
+    QString m_currentEditingNode; // 当前编辑的节点名称
 
 private:
     // 内部辅助函数：从UI读取数据到变量

@@ -81,6 +81,16 @@ LaserSettingDialog::LaserSettingDialog(QWidget *parent)
 
 LaserSettingDialog::~LaserSettingDialog() {}
 
+void LaserSettingDialog::setTargetNodeName(const QString &name)
+{
+    m_currentEditingNode = name;
+    if (name.isEmpty()) {
+        setWindowTitleText("Laser Settings");
+    } else {
+        setWindowTitleText("Edit Laser: " + name);
+    }
+}
+
 // 辅助函数：验证字符串是否为有效浮点数
 bool isValidNumber(const QString& str) {
     if (str.isEmpty()) return false;
@@ -206,19 +216,6 @@ void LaserSettingDialog::onOkClicked() {
         return;
     }
 
-    //组装
-    QString filePath = QDir::currentPath() + "/out.yml";
-    QFile file(filePath);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Yml file open failed"), this);
-        return;
-    }
-
-    QTextStream in(&file);
-    QString fileContent = in.readAll();
-    file.close();
-
     // 5. 生成 YAML
     yamlSection = QString(
                       "laser:\n"
@@ -235,63 +232,7 @@ void LaserSettingDialog::onOkClicked() {
                       .arg(zList.join(","))
                       .arg(radiusList.join(","));
 
-    QStringList lines = fileContent.split('\n');
-
-    int bgMeshStartIndex = -1;
-    int bgMeshEndIndex = -1;
-
-    for (int i = 0; i < lines.size(); ++i) {
-        if (lines[i].trimmed() == "laser:") {
-            bgMeshStartIndex = i;
-            break;
-        }
-    }
-
-    if (bgMeshStartIndex != -1) {
-        bgMeshEndIndex = bgMeshStartIndex;
-        for (int i = bgMeshStartIndex + 1; i < lines.size(); ++i) {
-            QString line = lines[i];
-            if (line.trimmed().isEmpty() || line.startsWith('#')) {
-                bgMeshEndIndex = i;
-                continue;
-            }
-            if (line.startsWith(' ') || line.startsWith('\t')) {
-                bgMeshEndIndex = i;
-                continue;
-            } else {
-                bgMeshEndIndex = i - 1;
-                break;
-            }
-        }
-
-        for (int i = bgMeshEndIndex; i >= bgMeshStartIndex; --i) {
-            lines.removeAt(i);
-        }
-
-        QStringList newLines = yamlSection.split('\n');
-        int insertIndex = bgMeshStartIndex;
-        for (const QString& newLine : newLines) {
-            lines.insert(insertIndex++, newLine);
-        }
-
-    } else {
-        lines.append("");
-        QStringList newLines = yamlSection.split('\n');
-        lines.append(newLines);
-    }
-
-    QString newFileContent = lines.join('\n');
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Write to yml file failed"), this);
-        return;
-    }
-
-    QTextStream out(&file);
-    out << newFileContent;
-    file.close();
-
-    emit sigLasterName("laser1");
+    emit sigLasterName("Laser");
     accept();
 }
 

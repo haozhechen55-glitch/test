@@ -9,6 +9,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFile>
+
+
 BGgridSetting::BGgridSetting(QWidget *parent)
     : FramelessBaseDialog(parent)
     , ui(new Ui::BGgridSetting)
@@ -25,6 +27,16 @@ BGgridSetting::BGgridSetting(QWidget *parent)
 BGgridSetting::~BGgridSetting()
 {
     delete ui;
+}
+
+void BGgridSetting::setTargetNodeName(const QString &name)
+{
+    m_currentEditingNode = name;
+    if (name.isEmpty()) {
+        setWindowTitleText("Background Grid Settings");
+    } else {
+        setWindowTitleText("Edit Grid: " + name);
+    }
 }
 
 void BGgridSetting::on_comboBox_currentIndexChanged(int index)
@@ -66,11 +78,9 @@ void BGgridSetting::on_pushButton_OK_clicked()
         return;
     }
 
-    writeBackgroundMeshToYml(xmin, ymin, zmin, xmax, ymax, zmax, x, y, z);
     writeJsonFile();
-    //设置名称
-    emit sigName("grid1");
-    accept(); // 关闭对话框并返回Accepted
+    emit sigName("Grid");
+    accept();
 }
 
 
@@ -117,14 +127,7 @@ void BGgridSetting::writeJsonFile()
     powderObj.insert("file", "particle.vtk");
 
     rootObj.insert("background_mesh", background_meshobj);
-    // === 【修改】: 只有当 particle.vtk 真实存在时，才写入 powder 配置 ===
-    // 这样空项目打开时，预览程序就不会去读不存在的文件，也就不会弹窗报错了
-    if (QFile::exists("particle.vtk")) {
-        QJsonObject powderObj;
-        powderObj.insert("type", "read_file");
-        powderObj.insert("file", "particle.vtk");
-        rootObj.insert("powder", powderObj);
-    }
+
     // 保存到 JSON 文件
     if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         QJsonDocument saveDoc(rootObj);
@@ -137,113 +140,27 @@ void BGgridSetting::writeJsonFile()
     emit sigJsonWriteFinish();
 }
 
-void BGgridSetting::writeBackgroundMeshToYml(const QString& xmin, const QString& ymin, const QString& zmin,
-                                             const QString& xmax, const QString& ymax, const QString& zmax,
-                                             const QString& nx, const QString& ny, const QString& nz)
+QString BGgridSetting::getYamlSection(const QString &fixedBoundaryYaml) const
 {
-    QString filePath = QDir::currentPath() + "/out.yml";
-    QFile file(filePath);
+    QString xmin = ui->lineEdit_XMin->text().trimmed();
+    QString ymin = ui->lineEdit_YMin->text().trimmed();
+    QString zmin = ui->lineEdit_ZMin->text().trimmed();
+    QString xmax = ui->lineEdit_XMax->text().trimmed();
+    QString ymax = ui->lineEdit_YMax->text().trimmed();
+    QString zmax = ui->lineEdit_ZMax->text().trimmed();
+    QString nx = ui->lineEdit_x->text().trimmed();
+    QString ny = ui->lineEdit_y->text().trimmed();
+    QString nz = ui->lineEdit_z->text().trimmed();
 
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        // 如果文件不存在或无法读取，提示错误
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Yml file open failed"), this);
-        return;
+    if (xmin.isEmpty() || nx.isEmpty()) return QString();
+
+    QString yaml;
+    yaml += "background_mesh:\n";
+    yaml += "    min: [" + xmin + ", " + ymin + ", " + zmin + "]\n";
+    yaml += "    max: [" + xmax + ", " + ymax + ", " + zmax + "]\n";
+    yaml += "    divide: [" + nx + ", " + ny + ", " + nz + "]\n";
+    if (!fixedBoundaryYaml.isEmpty()) {
+        yaml += fixedBoundaryYaml;
     }
-
-    QTextStream in(&file);
-    QString fileContent = in.readAll();
-    file.close();
-
-    // 构建新的 background_mesh 段内容，使用 QString::arg 拼接
-    QString newBackgroundMeshSection =
-        QString("background_mesh:\n"
-                "    min: [%1, %2, %3]\n"
-                "    max: [%4, %5, %6]\n"
-                "    divide: [%7, %8, %9]\n"
-                "    fixed_boundary:\n"
-                "      - direction: [x]  \n"
-                "        location: [xmin,xmax] \n"
-                "      - direction: [y]  \n"
-                "        location: [ymin,ymax] \n"
-                "      - direction: [z]  \n"
-                "        location: [zmin] \n")
-            .arg(xmin).arg(ymin).arg(zmin)
-            .arg(xmax).arg(ymax).arg(zmax)
-            .arg(nx).arg(ny).arg(nz);
-
-    QStringList lines = fileContent.split('\n');
-
-    int bgMeshStartIndex = -1;
-    int bgMeshEndIndex = -1;
-
-    for (int i = 0; i < lines.size(); ++i) {
-        if (lines[i].trimmed() == "background_mesh:") {
-            bgMeshStartIndex = i;
-            break;
-        }
-    }
-
-    if (bgMeshStartIndex != -1) {
-        // 2. 从找到的行开始，向后查找，直到遇到下一个顶级字段（行首无缩进且不是空行/注释）
-        // 或者文件结束
-        bgMeshEndIndex = bgMeshStartIndex;
-        for (int i = bgMeshStartIndex + 1; i < lines.size(); ++i) {
-            QString line = lines[i];
-            // 检查是否是顶级字段：行首不是空格或制表符，且不是空行或注释行（注释行以 # 开头）
-            // 注意：这里假设顶级字段不以 # 开头
-            if (line.trimmed().isEmpty() || line.startsWith('#')) {
-                // 空行或注释行，继续
-                bgMeshEndIndex = i;
-                continue;
-            }
-            // 检查行首是否有缩进
-            if (line.startsWith(' ') || line.startsWith('\t')) {
-                // 有缩进，属于当前块，继续
-                bgMeshEndIndex = i;
-                continue;
-            } else {
-                // 没有缩进，是下一个顶级字段，停止
-                bgMeshEndIndex = i - 1; // 结束于上一行
-                break;
-            }
-        }
-
-        // 3. 删除找到的 background_mesh 段 (从 bgMeshStartIndex 到 bgMeshEndIndex)
-        // 从后往前删除，避免索引变化
-        for (int i = bgMeshEndIndex; i >= bgMeshStartIndex; --i) {
-            lines.removeAt(i);
-        }
-        qDebug() << "Removed existing background_mesh section from line" << bgMeshStartIndex << "to" << bgMeshEndIndex;
-        qDebug() << "Lines count after removal:" << lines.size();
-
-        // 4. 在原来的位置 (bgMeshStartIndex) 插入新的 background_mesh 段
-        QStringList newLines = newBackgroundMeshSection.split('\n');
-        // 将新段的每一行插入到原来的位置
-        int insertIndex = bgMeshStartIndex;
-        for (const QString& newLine : newLines) {
-            lines.insert(insertIndex++, newLine);
-        }
-        qDebug() << "Inserted new background_mesh section at line" << bgMeshStartIndex;
-
-    } else {
-        // 如果没有找到 background_mesh 段，则追加到文件末尾
-        // 为了保持格式，先添加一个空行
-        lines.append("");
-        QStringList newLines = newBackgroundMeshSection.split('\n');
-        lines.append(newLines);
-        qDebug() << "Appended new background_mesh section to the end.";
-    }
-
-    // 5. 重新组合文件内容并写入
-     QString newFileContent = lines.join('\n');
-
-    // 重新打开文件进行写入（覆盖）
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        Toast::instance().show(Toast::TINFO, QStringLiteral("Write to yml file failed"), this);
-        return;
-    }
-
-    QTextStream out(&file);
-    out << newFileContent;
-    file.close();
+    return yaml;
 }

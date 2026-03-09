@@ -1,0 +1,49 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/logo.png</file>
+        <file>img/About Us.png</file>
+        <file>img/attribution.png</file>
+        <file>img/new.png</file>
+        <file>img/open.png</file>
+        <file>img/project-management.png</file>
+        <file>img/save.png</file>
+        <file>img/tool-box.png</file>
+        <file>img/work-flow-color.png</file>
+        <file>img/Reset.png</file>
+        <file>img/tree/body.png</file>
+        <file>img/tree/boundary.png</file>
+        <file>img/tree/component.png</file>
+        <file>img/tree/grid.png</file>
+        <file>img/tree/init.png</file>
+        <file>img/tree/load.png</file>
+        <file>img/tree/material.png</file>
+        <file>img/setting.png</file>
+        <file>img/autofit.png</file>
+        <file>img/back.png</file>
+        <file>img/background.png</file>
+        <file>img/bottom.png</file>
+        <file>img/front.png</file>
+        <file>img/left.png</file>
+        <file>img/right.png</file>
+        <file>img/top.png</file>
+        <file>img/global.png</file>
+        <file>img/Inital.png</file>
+        <file>img/laser.png</file>
+        <file>img/boundary.png</file>
+        <file>img/load.png</file>
+        <file>img/output.png</file>
+        <file>img/Solution.png</file>
+        <file>img/run.png</file>
+        <file>img/tree/MatPoint.png</file>
+        <file>img/last.png</file>
+        <file>img/next.png</file>
+        <file>img/play.png</file>
+        <file>img/MatPoint.png</file>
+        <file>img/tree/laser.png</file>
+        <file>img/tree/Solution.png</file>
+        <file>img/tree/output.png</file>
+        <file>img/arrow.png</file>
+        <file>img/pause.png</file>
+        <file>img/tick.png</file>
+    </qresource>
+</RCC>

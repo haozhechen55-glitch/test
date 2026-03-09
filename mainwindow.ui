@@ -1,0 +1,2493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1022</width>
+    <height>680</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="frame_title">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QToolButton" name="toolButton_4">
+             <property name="styleSheet">
+              <string notr="true">border: none;    </string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="image.qrc">
+               <normaloff>:/img/logo.png</normaloff>:/img/logo.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QToolButton" name="toolButton_min">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;    </string>
+               </property>
+               <property name="text">
+                <string>—</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_max">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;    </string>
+               </property>
+               <property name="text">
+                <string>☐</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_close">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;    </string>
+               </property>
+               <property name="text">
+                <string>✕</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_tool">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>90</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QTabWidget" name="tabWidget_Tool">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Microsoft YaHei UI</family>
+             <pointsize>10</pointsize>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">/* --- 全局容器 --- */
+QTabWidget {
+    background-color: white;
+}
+
+/* --- 1. 面板区域：贯穿全局的浅蓝色细线 --- */
+QTabWidget::pane {
+    border-top: 1px solid #A0C4DE; 
+    background: white;
+    /* 绝对定位确保线条与标签无缝衔接 */
+    position: absolute;
+    top: -1px; 
+}
+
+/* --- 2. 标签栏整体 --- */
+QTabBar {
+    background: transparent;
+}
+
+/* --- 3. 基础标签样式（未选中状态） --- */
+QTabBar::tab {
+    background: transparent;
+    color: #4D6D8B;
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;;
+    
+    /* [修改] 字体改大 */
+    font-size: 14px; 
+    
+    /* [修改] 增加内边距：
+       - 上下 8px：让 Tab 变高
+       - 左右 30px：让 Tab 变宽，且给粗体字预留膨胀空间 */
+    padding: 2px 15px; 
+    
+    /* [修改] 最小宽度：防止只有2个字的短标题被切 */
+    min-width: 80px;
+
+    margin-right: 1px;
+
+    /* --- [关键修改] 透明边框占位 --- 
+       这里必须设置得和“选中状态”的边框厚度一模一样！
+       这样切换时，内容区域才不会因为边框出现而被挤压。 */
+    border-top: 2px solid transparent; 
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 2px solid transparent; 
+}
+
+/* --- 4. 选中状态 --- */
+QTabBar::tab:selected {
+    background: white; 
+    color: #0078D4;
+    font-weight: bold;
+
+    /* --- 改变边框颜色（厚度由上面第3部分决定，这里不重复写width） --- */
+    border-top-color: #0078D4;    /* 顶部变蓝 */
+    border-left-color: #A0C4DE;   /* 左侧淡蓝 */
+    border-right-color: #A0C4DE;  /* 右侧淡蓝 */
+
+    /* 底部用白色覆盖 Pane 的线条 */
+    border-bottom-color: white; 
+    
+    /* 负边距确保压在 Pane 线上 */
+    margin-bottom: -1px; 
+}
+
+/* --- 5. 悬停微调 --- */
+QTabBar::tab:hover:!selected {
+    background-color: #F5F8FA;
+    color: #005691;
+}
+
+/* --- 6. 高度补偿（已不再需要） --- */
+/* 由于我们在第3部分加了3px的透明顶边框，未选中状态自然就有了高度。
+   为了保证对齐最稳，这里建议删去 margin-top 的设置 */
+QTabBar::tab:!selected {
+    margin-top: 0px; 
+}</string>
+           </property>
+           <property name="currentIndex">
+            <number>2</number>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="tabBarAutoHide">
+            <bool>false</bool>
+           </property>
+           <widget class="QWidget" name="tab_File">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <attribute name="title">
+             <string>File</string>
+            </attribute>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="leftMargin">
+              <number>5</number>
+             </property>
+             <property name="topMargin">
+              <number>3</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <property name="topMargin">
+                <number>3</number>
+               </property>
+               <property name="rightMargin">
+                <number>15</number>
+               </property>
+               <property name="bottomMargin">
+                <number>3</number>
+               </property>
+               <item>
+                <widget class="QToolButton" name="toolButton_new">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>New</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>New</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/new.png</normaloff>:/img/new.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_open">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Open</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Open</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/open.png</normaloff>:/img/open.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_save">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Save</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Save</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/save.png</normaloff>:/img/save.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_setting">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Save</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Setting</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/setting.png</normaloff>:/img/setting.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="windowModality">
+                <enum>Qt::NonModal</enum>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>10</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="midLineWidth">
+                <number>1</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="leftMargin">
+                <number>15</number>
+               </property>
+               <property name="topMargin">
+                <number>3</number>
+               </property>
+               <property name="bottomMargin">
+                <number>3</number>
+               </property>
+               <item>
+                <widget class="QToolButton" name="toolButton_setting_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Save</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Body</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/tree/body.png</normaloff>:/img/tree/body.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_View">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <attribute name="title">
+             <string>View</string>
+            </attribute>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>2</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>2</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <widget class="QToolButton" name="toolButto_left">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Reset</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Left  </string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/left.png</normaloff>:/img/left.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="toolButto_front">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Reset</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Front </string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/front.png</normaloff>:/img/front.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="toolButto_top">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Reset</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Top   </string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/top.png</normaloff>:/img/top.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                 <item>
+                  <widget class="QToolButton" name="toolButton_right">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Toolbox</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Right </string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/right.png</normaloff>:/img/right.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>25</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="toolButto_back">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Reset</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Back  </string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/back.png</normaloff>:/img/back.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="toolButto_bottom">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Microsoft YaHei UI</family>
+                     <pointsize>10</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>Reset</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="text">
+                    <string>Bottom</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="image.qrc">
+                     <normaloff>:/img/bottom.png</normaloff>:/img/bottom.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line_3">
+               <property name="midLineWidth">
+                <number>1</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <property name="topMargin">
+                <number>3</number>
+               </property>
+               <property name="bottomMargin">
+                <number>3</number>
+               </property>
+               <item>
+                <widget class="QToolButton" name="toolButton_save_3">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Save</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Auto Fit</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/autofit.png</normaloff>:/img/autofit.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="toolButton_save_4">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft YaHei UI</family>
+                   <pointsize>10</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>Save</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="text">
+                  <string>Background</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="image.qrc">
+                   <normaloff>:/img/background.png</normaloff>:/img/background.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextUnderIcon</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>639</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_PreProcess">
+            <attribute name="title">
+             <string>PreProcess</string>
+            </attribute>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="leftMargin">
+              <number>5</number>
+             </property>
+             <property name="topMargin">
+              <number>3</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="toolButton_B_G_grid">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>B-G grid</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/tree/grid.png</normaloff>:/img/tree/grid.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_MatPoint">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Mat-Point</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/MatPoint.png</normaloff>:/img/MatPoint.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_open_5">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Material</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/tree/material.png</normaloff>:/img/tree/material.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_open_6">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Component</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/tree/component.png</normaloff>:/img/tree/component.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_open_Laser">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Laser</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/laser.png</normaloff>:/img/laser.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_Inital">
+               <property name="minimumSize">
+                <size>
+                 <width>55</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Initial</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/Inital.png</normaloff>:/img/Inital.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_Load">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Load</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/load.png</normaloff>:/img/load.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_open_Boundary">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Boundary</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/boundary.png</normaloff>:/img/boundary.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_2">
+               <property name="frameShadow">
+                <enum>QFrame::Sunken</enum>
+               </property>
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <property name="midLineWidth">
+                <number>1</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_Global">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Global</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/global.png</normaloff>:/img/global.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_powder">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Powder</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/tree/MatPoint.png</normaloff>:/img/tree/MatPoint.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_Simulation">
+            <attribute name="title">
+             <string>Simulation</string>
+            </attribute>
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <property name="spacing">
+              <number>5</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="toolButton_output">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft JhengHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Output</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/output.png</normaloff>:/img/output.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_solution">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft JhengHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Solution</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/Solution.png</normaloff>:/img/Solution.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_run">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft JhengHei UI</family>
+                 <pointsize>10</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:none;</string>
+               </property>
+               <property name="text">
+                <string>Run</string>
+               </property>
+               <property name="icon">
+                <iconset resource="image.qrc">
+                 <normaloff>:/img/run.png</normaloff>:/img/run.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextUnderIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>849</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_PostProcess">
+            <attribute name="title">
+             <string>PostProcess</string>
+            </attribute>
+            <widget class="QWidget" name="layoutWidget">
+             <property name="geometry">
+              <rect>
+               <x>6</x>
+               <y>3</y>
+               <width>838</width>
+               <height>61</height>
+              </rect>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <property name="spacing">
+                 <number>26</number>
+                </property>
+                <item>
+                 <widget class="QToolButton" name="toolButton_last">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei UI</family>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border:none;</string>
+                  </property>
+                  <property name="text">
+                   <string>Last</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="image.qrc">
+                    <normaloff>:/img/last.png</normaloff>:/img/last.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toolButton_play">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei UI</family>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border:none;
+/* 默认状态（未播放）：显示播放图标 */
+QToolButton#toolButton_play {
+    /* 你的图标路径 */
+    qproperty-icon: url(:/icons/play.png);
+    background-color: transparent; /* 或者你想要的颜色 */
+}
+
+/* 选中状态（正在播放）：显示暂停图标 */
+QToolButton#toolButton_play:checked {
+    /* 你的图标路径 */
+    qproperty-icon: url(:/icons/pause.png);
+    /* 选中时通常背景会变深，表示正在运行 */
+    background-color: transparent; 
+    border: 1px solid #A0C4DE;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Play</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="image.qrc">
+                    <normaloff>:/img/play.png</normaloff>:/img/play.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toolButton_next">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei UI</family>
+                    <pointsize>10</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border:none;</string>
+                  </property>
+                  <property name="text">
+                   <string>Next</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="image.qrc">
+                    <normaloff>:/img/next.png</normaloff>:/img/next.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextUnderIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QComboBox" name="comboBox_attributes">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei UI</family>
+                    <pointsize>-1</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>attribute</string>
+                  </property>
+                  <property name="statusTip">
+                   <string/>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* 1. ComboBox 主体 */
+QComboBox {
+    border: 1px solid #A0C4DE;      /* 边框颜色 */
+    border-radius: 4px;
+    padding: 1px 10px 1px 10px;     /* 文字内边距 */
+    background-color: white;
+   font-family: &quot;Microsoft YaHei UI&quot;, &quot;Segoe UI&quot;;
+    color: #333333;
+    font-size: 12px;
+    min-height: 28px;
+}
+
+/* 2. 下拉按钮区域（右侧那个小格子） */
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 26px; 
+    /* 关键：添加左边框，使箭头按钮与左侧选择区产生视觉隔离，不再“融合” */
+    border-left: 1px solid #CFD8DC; 
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #F8FBFF;      /* 给按钮区一个极淡的背景色，增加层次感 */
+}
+
+/* 3. 调用你的 aarrow 图片 */
+QComboBox::down-arrow {
+    image: url(:/img/arrow.png);   /* 这里就是调用你新增资源的地方 */
+    width: 12px;                    /* 根据你图片的实际大小微调 */
+    height: 12px;
+}
+
+/* 4. 悬停状态 */
+QComboBox:hover {
+    border: 1px solid #0078D4;
+}
+
+/* 5. 下拉列表项样式 */
+QComboBox QAbstractItemView {
+    border: 1px solid #A0C4DE;
+    background-color: white;
+    selection-background-color: #0078D4;
+    outline: 0px;
+}</string>
+                  </property>
+                  <property name="editable">
+                   <bool>false</bool>
+                  </property>
+                  <property name="currentText">
+                   <string/>
+                  </property>
+                  <property name="insertPolicy">
+                   <enum>QComboBox::InsertAfterCurrent</enum>
+                  </property>
+                  <property name="placeholderText">
+                   <string/>
+                  </property>
+                  <property name="frame">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_fenliang">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>80</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei UI</family>
+                    <pointsize>-1</pointsize>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Vector</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* 1. ComboBox 主体 */
+QComboBox {
+    border: 1px solid #A0C4DE;      /* 边框颜色 */
+    border-radius: 4px;
+    padding: 1px 10px 1px 10px;     /* 文字内边距 */
+    background-color: white;
+   font-family: &quot;Microsoft YaHei UI&quot;, &quot;Segoe UI&quot;;
+    color: #333333;
+    font-size: 12px;
+    min-height: 28px;
+}
+
+/* 2. 下拉按钮区域（右侧那个小格子） */
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 26px; 
+    /* 关键：添加左边框，使箭头按钮与左侧选择区产生视觉隔离，不再“融合” */
+    border-left: 1px solid #CFD8DC; 
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #F8FBFF;      /* 给按钮区一个极淡的背景色，增加层次感 */
+}
+
+/* 3. 调用你的 aarrow 图片 */
+QComboBox::down-arrow {
+    image: url(:/img/arrow.png);   /* 这里就是调用你新增资源的地方 */
+    width: 12px;                    /* 根据你图片的实际大小微调 */
+    height: 12px;
+}
+
+/* 4. 悬停状态 */
+QComboBox:hover {
+    border: 1px solid #0078D4;
+}
+
+/* 5. 下拉列表项样式 */
+QComboBox QAbstractItemView {
+    border: 1px solid #A0C4DE;
+    background-color: white;
+    selection-background-color: #0078D4;
+    outline: 0px;
+}</string>
+                  </property>
+                  <property name="insertPolicy">
+                   <enum>QComboBox::InsertAfterCurrent</enum>
+                  </property>
+                  <property name="frame">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_5">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QComboBox" name="comboBox_rendering">
+                  <property name="styleSheet">
+                   <string notr="true">/* 1. ComboBox 主体 */
+QComboBox {
+    border: 1px solid #A0C4DE;      /* 边框颜色 */
+    border-radius: 4px;
+    padding: 1px 10px 1px 10px;     /* 文字内边距 */
+    background-color: white;
+   font-family: &quot;Microsoft YaHei UI&quot;, &quot;Segoe UI&quot;;
+    color: #333333;
+    font-size: 12px;
+    min-height: 28px;
+}
+
+/* 2. 下拉按钮区域（右侧那个小格子） */
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 26px; 
+    /* 关键：添加左边框，使箭头按钮与左侧选择区产生视觉隔离，不再“融合” */
+    border-left: 1px solid #CFD8DC; 
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #F8FBFF;      /* 给按钮区一个极淡的背景色，增加层次感 */
+}
+
+/* 3. 调用你的 aarrow 图片 */
+QComboBox::down-arrow {
+    image: url(:/img/arrow.png);   /* 这里就是调用你新增资源的地方 */
+    width: 12px;                    /* 根据你图片的实际大小微调 */
+    height: 12px;
+}
+
+/* 4. 悬停状态 */
+QComboBox:hover {
+    border: 1px solid #0078D4;
+}
+
+/* 5. 下拉列表项样式 */
+QComboBox QAbstractItemView {
+    border: 1px solid #A0C4DE;
+    background-color: white;
+    selection-background-color: #0078D4;
+    outline: 0px;
+}</string>
+                  </property>
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Surface</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Points</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>OutLine</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Point Gaussian</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="LineEdit_GaussianRadius">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>120</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* 统一设置 QLineEdit 的风格，使其与 ComboBox 和 TreeView 协调 */
+QLineEdit {
+    /* 1. 字体统一 */
+    font-family: &quot;Microsoft YaHei UI&quot;, &quot;Segoe UI&quot;;
+    font-size: 10pt;  /* 与你的 ToolButton 大小一致 */
+    color: #333333;
+
+    /* 2. 边框风格（参考了你的 ComboBox 颜色 #A0C4DE） */
+    border: 1px solid #A0C4DE;
+    border-radius: 4px;       /* 圆角 */
+    padding: 2px 5px;         /* 内边距，让文字不要贴着边框 */
+    background-color: #FFFFFF;
+}
+
+/* 3. 鼠标悬停或输入时的交互效果 */
+QLineEdit:hover {
+    border: 1px solid #0078D4; /* 悬停时变蓝 */
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078D4; /* 聚焦时变蓝 */
+    background-color: #F8FBFF; /* 背景变极淡的蓝，增加聚焦感 */
+}</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>GaussianRadius</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_PointSize">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>90</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/* 统一设置 QLineEdit 的风格，使其与 ComboBox 和 TreeView 协调 */
+QLineEdit {
+    /* 1. 字体统一 */
+    font-family: &quot;Microsoft YaHei UI&quot;, &quot;Segoe UI&quot;;
+    font-size: 10pt;  /* 与你的 ToolButton 大小一致 */
+    color: #333333;
+
+    /* 2. 边框风格（参考了你的 ComboBox 颜色 #A0C4DE） */
+    border: 1px solid #A0C4DE;
+    border-radius: 4px;       /* 圆角 */
+    padding: 2px 5px;         /* 内边距，让文字不要贴着边框 */
+    background-color: #FFFFFF;
+}
+
+/* 3. 鼠标悬停或输入时的交互效果 */
+QLineEdit:hover {
+    border: 1px solid #0078D4; /* 悬停时变蓝 */
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078D4; /* 聚焦时变蓝 */
+    background-color: #F8FBFF; /* 背景变极淡的蓝，增加聚焦感 */
+}</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>PointSize</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_Tools">
+            <attribute name="title">
+             <string>Tools</string>
+            </attribute>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_body">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,5">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <item>
+            <widget class="QFrame" name="frame">
+             <property name="styleSheet">
+              <string notr="true">QFrame#frame{background-color: #f0f0f0;}</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8" stretch="4,1">
+              <item>
+               <widget class="QTreeView" name="treeView_left">
+                <property name="styleSheet">
+                 <string notr="true">/* --- 1. 树控件整体 --- */
+QTreeView {
+    background-color: #FFFFFF;
+    border: 1px solid #CFD8DC;
+    border-radius: 4px;
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;;
+    font-size: 11pt;
+    outline: 0;                 /* 去掉聚焦时的虚线框 */
+    padding: 0px;
+    
+    /* 【关键】开启此属性，让 Item 的样式能控制整行（包括箭头区域） */
+    qproperty-showDecorationSelected: 1; 
+}
+
+/* --- 2. 每一行（基础态） --- */
+QTreeView::item {
+    height: 32px;
+    border: none;
+    color: #546E7A;             /* 未选中时的文字颜色 */
+    padding-left: 6px;
+    background-color: #FFFFFF;  /* 默认背景白 */
+}
+
+/* --- 3. 鼠标悬停态 --- */
+/* 如果您连悬停的极淡灰色都不想要，就把这里的 #FAFAFA 改成 #FFFFFF */
+QTreeView::item:hover {
+    background-color: #FAFAFA;  
+    color: #263238;
+}
+
+/* --- 4. 选中状态（激活/获取焦点时） --- */
+QTreeView::item:selected {
+    /* 【核心】背景强制设为白色，彻底消灭色块 */
+    background-color: #FFFFFF; 
+    
+    /* 仅通过文字变色来提示选中 */
+    color: #2196F3;
+    font-weight: bold;
+    
+    /* 左侧 2px 蓝色细条指示 */
+    border-left: 2px solid #2196F3;
+}
+
+/* --- 5. 选中状态（失去焦点时） --- */
+/* 防止点击其他窗口后，这里变成灰块 */
+QTreeView::item:selected:!active {
+    background-color: #FFFFFF;  /* 【核心】这里也要白 */
+    color: #90A4AE;             /* 文字变灰一点 */
+    border-left: 2px solid #CFD8DC; /* 左侧条变灰 */
+}
+
+/* --- 6. 分支区域（箭头所在列） --- */
+QTreeView::branch {
+    background-color: #FFFFFF; /* 强制背景白 */
+}
+QTreeView::branch:selected {
+    background-color: #FFFFFF; /* 强制选中时背景也白 */
+}</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="listWidget_frames">
+                <property name="styleSheet">
+                 <string notr="true">/* --- 1. 列表控件整体 --- */
+QListWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #CFD8DC;
+    border-radius: 4px;
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;;
+    font-size: 11pt;
+    outline: 0;                 /* 去掉聚焦时的虚线框 */
+    padding: 0px;
+    
+    /* 【关键】开启此属性，让 Item 的样式能控制整行 */
+    qproperty-showDecorationSelected: 1; 
+}
+
+/* --- 2. 每一行（基础态） --- */
+QListWidget::item {
+    height: 32px;
+    border: none; /* 必须先清空默认边框，否则下面的 border-left 可能显示异常 */
+    border-left: 2px solid transparent; /* 预留左侧边框位置，防止选中时抖动 */
+    color: #546E7A;             /* 未选中时的文字颜色 */
+    padding-left: 4px;          /* 稍微调整内边距，因为左侧有2px边框 */
+    background-color: #FFFFFF;  /* 默认背景白 */
+}
+
+/* --- 3. 鼠标悬停态 --- */
+QListWidget::item:hover {
+    background-color: #FAFAFA;  
+    color: #263238;
+}
+
+/* --- 4. 选中状态（激活/获取焦点时） --- */
+QListWidget::item:selected {
+    /* 【核心】背景强制设为白色，彻底消灭色块 */
+    background-color: #FFFFFF; 
+    
+    /* 仅通过文字变色来提示选中 */
+    color: #2196F3;
+    font-weight: bold;
+    
+    /* 左侧 2px 蓝色细条指示 */
+    border-left: 2px solid #2196F3;
+}
+
+/* --- 5. 选中状态（失去焦点时） --- */
+/* 防止点击其他窗口后，这里变成灰块 */
+QListWidget::item:selected:!active {
+    background-color: #FFFFFF;  /* 【核心】这里也要白 */
+    color: #90A4AE;             /* 文字变灰一点 */
+    border-left: 2px solid #CFD8DC; /* 左侧条变灰 */
+}</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_2">
+             <property name="styleSheet">
+              <string notr="true">QFrame#frame_2{background-color: #f0f0f0;}</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QSplitter" name="splitter">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <widget class="QTabWidget" name="tabWidget_center">
+                   <property name="font">
+                    <font>
+                     <family>Segoe UI</family>
+                     <pointsize>10</pointsize>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                     <stylestrategy>PreferAntialias</stylestrategy>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">/* 1. 整体容器：去掉默认的浮雕边框 */
+QTabWidget#tabWidget_center::pane {
+    border: 1px solid #C0C0C0; /* 柔和的灰色边框 */
+    background: white;         /* 内容区背景纯白 */
+    top: -1px;                 /* 稍微向上移，盖住 TabBar 的底边，形成一体感 */
+}
+
+/* 2. Tab 条的背景 */
+QTabWidget#tabWidget_center QTabBar {
+    background: #F0F0F0;       /* Tab 栏背景略灰，区分内容区 */
+}
+
+/* 3. 单个标签页的基础样式 */
+QTabWidget#tabWidget_center QTabBar::tab {
+    background: #E1E1E1;       /* 未选中时：浅灰色 */
+    border: 1px solid #C0C0C0; /* 边框 */
+    border-bottom-color: #C0C0C0; 
+    min-width: 100px;          /* 最小宽度 */
+    padding: 6px 15px;         /* 内边距，让文字不拥挤 */
+    color: #555555;            /* 文字深灰 */
+    border-top-left-radius: 4px;  /* 左上角圆角 */
+    border-top-right-radius: 4px; /* 右上角圆角 */
+    margin-right: 2px;         /* 标签之间的间隔 */
+}
+
+/* 4. 鼠标悬停样式 */
+QTabWidget#tabWidget_center QTabBar::tab:hover {
+    background: #F5F5F5;       /* 稍微变亮 */
+    color: #333333;
+}
+
+/* 5. 选中状态（激活）样式 - 核心 */
+QTabWidget#tabWidget_center QTabBar::tab:selected {
+    background: white;         /* 选中变为白色，与下方内容融合 */
+    border-bottom-color: white;/* 底部边框变白，打通内容区 */
+    border-top: 3px solid #0078D7; /* 顶部加一条蓝色强调线 */
+}
+
+/* 6. 处理非选中项看起来太靠下的问题 */
+QTabWidget#tabWidget_center QTabBar::tab:!selected {
+    margin-top: 3px; /* 让未选中的矮一点，突出选中的 */
+}</string>
+                   </property>
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <widget class="QWidget" name="preprocess">
+                    <attribute name="title">
+                     <string>Pre-process</string>
+                    </attribute>
+                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                     <item>
+                      <widget class="QVTKOpenGLNativeWidget" name="widget_vtk_pre" native="true">
+                       <property name="autoFillBackground">
+                        <bool>false</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="postprocess">
+                    <attribute name="title">
+                     <string>Post-process</string>
+                    </attribute>
+                    <layout class="QHBoxLayout" name="horizontalLayout_15">
+                     <item>
+                      <widget class="QVTKOpenGLNativeWidget" name="widget_vtk_post" native="true">
+                       <property name="autoFillBackground">
+                        <bool>false</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                  <widget class="QWidget" name="widget" native="true">
+                   <property name="styleSheet">
+                    <string notr="true">
+/* 标签样式：模仿选中状态的 Tab */
+QLabel {
+    background-color: #FFFFFF;    /* 背景纯白，与 Tab 内容区一致 */
+    color: #202020;               /* 字体颜色加深，匹配选中状态 */
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;;
+    padding: 6px 12px;            /* 内边距调整为与 Tab 一致 */
+
+    /* 边框设计：统一色调 */
+    border-left: 1px solid #BFBFBF;   /* 与 TabPane 边框颜色一致 */
+    border-right: 1px solid #BFBFBF;
+    border-bottom: 1px solid #FFFFFF; /* 关键：底部白色，打通下方区域 */
+    
+    /* 核心特征：顶部蓝色强调条 */
+    border-top: 3px solid #007ACC;    
+
+    /* 圆角 */
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    /* 布局位置 */
+    margin-bottom: -1px;          /* 关键：向下偏移1px，覆盖下方控件的边框 */
+    margin-left: 2px;             /* 左侧对齐微调 */
+}
+
+/* 2. 控制台文本框样式 */
+QTextEdit {
+    background-color: #FFFFFF;
+    border: 1px solid #8C98A5;    /* 完整的边框 */
+    border-radius: 3px;
+    /* 只有右上和右下圆角，左上角因为被标签压住，也可以保留圆角 */
+}</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Console</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QTextEdit" name="textEdit_log">
+                      <property name="styleSheet">
+                       <string notr="true">QTextEdit#textEdit_log {
+    /* 1. 背景与文字：使用护眼的纯白背景和深灰文字 */
+    background-color: #FFFFFF;
+    color: #333333;
+    font-family: &quot;Consolas&quot;, &quot;Courier New&quot;, monospace;
+    font-size: 10pt;
+
+    /* 2. 边框核心设计（微立体感的来源） */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px; /* 3px 圆角，比直角柔和，比圆角方正 */
+
+    /* 技巧：让上边框比其他三边稍微深一点点，模拟顶光产生的内阴影 */
+    border-top-color: #8C98A5;    /* 顶部：深灰蓝 */
+    border-left-color: #B0BCC9;   /* 左侧：中灰蓝 */
+    border-right-color: #CDE0F0;  /* 右侧：浅灰蓝 */
+    border-bottom-color: #CDE0F0; /* 底部：浅灰蓝 (模拟反光) */
+
+    /* 3. 内边距：文字离边框稍微远一点，呼吸感更强 */
+    padding: 6px;
+}
+
+/* 4. 交互反馈：当鼠标点进去输入时，边框变成专业蓝，提示“已激活” */
+QTextEdit#textEdit_log:focus {
+    border: 1px solid #3182CE; /* 聚焦时的亮蓝色 */
+    background-color: #F8FBFF; /* 背景极淡的蓝色，增强聚焦感 */
+}</string>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Sunken</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QProgressBar" name="progressBar">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>5</height>
+                   </size>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
+                  </property>
+                  <property name="textVisible">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKOpenGLNativeWidget</class>
+   <extends>QWidget</extends>
+   <header>qvtkopenglnativewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="image.qrc"/>
+ </resources>
+ <connections/>
+</ui>
